@@ -1,6 +1,6 @@
 // Actions types
 import {
-    OBTENER_PRODUCTOS, OBTENER_PRODUCTOS_ERROR, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK
+    OBTENER_PRODUCTOS, OBTENER_PRODUCTOS_ERROR, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK, ELIMINAR_STOCK
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
@@ -210,6 +210,7 @@ export const getReporteProductos = () => {
         }
     }
 }
+
 export const getReporteProductosStock = (formFechas) => {
     return async(dispatch) => {
         try {
@@ -217,6 +218,24 @@ export const getReporteProductosStock = (formFechas) => {
             dispatch({
                 type: OBTENER_REPORTE_STOCK,
                 productos: data.results
+            });
+        } catch(error){
+            console.log(error);
+        }
+    }
+}
+
+export const deleteStock = (id) => {
+    return async (dispatch) => {
+        try {
+            await clientToken.put('api/producto/stock', {id});
+            Swal.fire(
+                'Stock eliminado correctamente.',
+                'ChatMóvil.',
+                'success'
+            );
+            dispatch({
+                type: ELIMINAR_STOCK,
             });
         } catch(error){
             console.log(error);

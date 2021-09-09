@@ -1,6 +1,16 @@
 import React from 'react';
+import {TiDeleteOutline} from 'react-icons/ti';
+import { useDispatch } from 'react-redux';
+import { deleteStock } from '../Redux/actions/productosActions';
 
 const ListadoStock = ({stocks}) => {
+
+    const dispatch = useDispatch();
+
+    const handleDeleteStock = (id) => {
+        dispatch(deleteStock(id));
+    }
+
     return (
         stocks && stocks.length > 0 &&
         <ul className="list-group">
@@ -13,6 +23,15 @@ const ListadoStock = ({stocks}) => {
                         Precio Compra: Q.{stock.precioCompra} --
                         Cantidad Comprada: {stock.cantidadComprada} --
                         Cantidad Restante: {stock.cantidadRestante}
+                        <button
+                            className="btn btn-danger m-2"
+                            onClick={() => handleDeleteStock(stock.id)}
+                        >
+                            Eliminar
+                            <TiDeleteOutline
+                                size="20px"
+                            />
+                        </button>
                     </li>
                 ))
             }

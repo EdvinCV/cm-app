@@ -35,7 +35,6 @@ const Login = () => {
                     <LoginForm
                         onSubmit={handleLogin}
                     />
-                    <p className="card-text"><small className="text-muted">Sistema ChatMóvil - {new Date().getFullYear()}</small></p>
                 </div>
             </div>
         </div>

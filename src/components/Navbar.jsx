@@ -27,7 +27,8 @@ const Navbar = () => {
                     className="navbar-brand mb-0 h1"
                     onClick={() => history.push("/home")}
                 >
-                    <img src="icons/chat.png" width="60px" alt="ChatMovil" />
+                    <img src="icons/inicio.png" width="60px" alt="ChatMovil" />
+                    ChatMóvil
                 </span>
                 <span
                     className="navbar-text"
