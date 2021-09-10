@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 
 const ReporteCategorias = ({data, setShowForm}) => {

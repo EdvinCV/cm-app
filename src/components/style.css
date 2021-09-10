@@ -24,6 +24,12 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+@media (max-width: 1024px) {
+    .contenedor {
+        height: auto;
+    }
+}
 /*
     MODULO HOME
 */
@@ -51,6 +57,7 @@
     margin: 10px;
     padding: 20px;
     min-height: 500px;
+    margin-top: 25px;
 }
 .contenedor-usuarios > hr {
     color: #f50092;
@@ -64,6 +71,18 @@
     margin: 10px;
     padding: 20px;
     min-height: 500px;
+}
+
+.contenedor-controlProductos {
+    border-radius: 10px;
+    min-height: 500px;
+    
+}
+
+@media (max-width: 330px) {
+    .contenedor-controlProductos {
+        margin-top: 30px;
+    }
 }
 
 .contenedor-productos > hr {
@@ -103,6 +122,16 @@
 }
 .contenedor-ventas > hr {
     color: #f50092;
+}
+
+.contenedor-ventasGeneral {
+
+}
+
+@media (max-width: 330px) {
+    .contenedor-ventasGeneral {
+        margin-top: 30px;
+    }
 }
 
 .contenedorVentas {

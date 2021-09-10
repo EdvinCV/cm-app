@@ -272,7 +272,8 @@ const Productos = () => {
         )
     } else {
         return (
-            <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
+            <div className="contenedor-controlProductos">
+            <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3 mt-10">
                 <Tab eventKey="home" title="Control Productos">
                     <div className="contenedor-productos">
                     <h1>Control de productos</h1>
@@ -401,6 +402,7 @@ const Productos = () => {
                                 listadoStock ? (
                                     <ListadoStock 
                                         stocks={listadoStock}
+                                        setShowListadoStock={setShowListadoStock}
                                     />
                                 ) : (
                                     <Loader
@@ -419,7 +421,7 @@ const Productos = () => {
                     <div className="contenedor-productos">
                         <h1>Reporte de Stock</h1>
                         <div
-                            style={{display: "flex", justifyContent:"space-around"}}
+                            style={{display: "flex", justifyContent:"space-around", flexWrap:"wrap"}}
                         >
                     <div>
                         <label htmlFor="">Fecha Inicio</label>
@@ -442,7 +444,7 @@ const Productos = () => {
                         />
                     </div>
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-primary mt-3"
                         onClick={handleSubmitReporte}
                     >
                         Buscar
@@ -462,6 +464,7 @@ const Productos = () => {
             </div>
                 </Tab>
             </Tabs>
+            </div>
         )
     }
 }

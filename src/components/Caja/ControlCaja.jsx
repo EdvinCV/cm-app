@@ -121,7 +121,7 @@ const ControlCaja = () => {
                                 )
                             }
                         </button>
-                        <div className="mt-5">
+                        <div className="mt-5" style={{overflowX:"auto"}}>
                             {
                                 ventasHoy &&
                                     <VentasCaja
@@ -173,13 +173,15 @@ const ControlCaja = () => {
                                 </div>
                             </Tab>
                             <Tab eventKey="profile" title="Listado Ventas">
-                                {
-                                    ventasHoy &&
-                                        <VentasTable
-                                            data={ventasHoy}
-                                            setShowForm={setShowForm}
-                                        />
-                                }
+                                <div style={{overflowX:"auto"}}>
+                                    {
+                                        ventasHoy &&
+                                            <VentasTable
+                                                data={ventasHoy}
+                                                setShowForm={setShowForm}
+                                            />
+                                    }
+                                </div>
                             </Tab>
                         </Tabs>
                         

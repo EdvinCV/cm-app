@@ -25,7 +25,7 @@ const ReporteStock = ({data}) => {
                         <td>{producto.cantidadComprada}</td>
                         <td>{producto.precioCompra}</td>
                         <td>{producto.precioCompra * producto.cantidadComprada}</td>
-                        <td>{producto.createdAt}</td>
+                        <td>{new Date(producto.createdAt).toLocaleDateString()}</td>
                     </tr>
                 ))
             }

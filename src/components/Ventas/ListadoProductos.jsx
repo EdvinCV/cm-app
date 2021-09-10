@@ -9,7 +9,6 @@ import Loader from 'react-loader-spinner';
 import { useReactToPrint } from 'react-to-print';
 import Recibo from './Recibo';
 
-
 const ListadoProductos = () => {
     // DISPATCH
     const dispatch = useDispatch();
@@ -39,17 +38,22 @@ const ListadoProductos = () => {
     }, [cajaAbierta])
     // Buscador de productos
     useEffect(() => {
-        setProductosSeleccionados(productos);
+        if(productos){
+            setProductosSeleccionados(productos);
+        }
     }, [productos])
     useEffect(() => {
         if(buscador !== ""){
-            const nuevosProductos = productos.filter(
-                (prod) => 
-                    (prod.name.search(buscador) !== -1) ||  (prod.producto.search(buscador) !== -1));
-            setProductosSeleccionados(nuevosProductos);
-
+            if(productos){
+                const nuevosProductos = productos.filter(
+                    (prod) => 
+                        (prod.name.search(buscador) !== -1) ||  (prod.producto.search(buscador) !== -1));
+                setProductosSeleccionados(nuevosProductos);
+            }
         } else {
-            setProductosSeleccionados(productos);
+            if(productos){
+                setProductosSeleccionados(productos);
+            }
         }
     }, [buscador, productos])
 
@@ -96,7 +100,7 @@ const ListadoProductos = () => {
             }
             <div className="contenedorProductosVentas">
                 <input
-                    style={{maxWidth: "20%"}}
+                    style={{maxWidth: "40%"}}
                     className="form-control md-4"
                     type="text"
                     value={buscador}

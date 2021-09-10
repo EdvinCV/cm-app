@@ -77,12 +77,13 @@ const ControlVentas = () => {
     }
 
     return (
+        <div className="contenedor-ventasGeneral">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
             <Tab eventKey="home" title="Reporte Ventas">
             <div className="contenedor-ventas">
             <h1>Listado de Ventas</h1>
             <div
-                style={{display: "flex", justifyContent:"space-around"}}
+                style={{display: "flex", justifyContent:"space-around", flexWrap:"wrap"}}
             >
                 <div>
                     <label htmlFor="">Fecha Inicio</label>
@@ -105,13 +106,13 @@ const ControlVentas = () => {
                     />
                 </div>
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary mt-2"
                     onClick={handleObtenerVentas}
                 >
                     Buscar Ventas
                 </button>
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary mt-2"
                     onClick={handleObtenerVentasHoy}
                 >
                     Ventas Hoy
@@ -241,7 +242,7 @@ const ControlVentas = () => {
             <div className="contenedor-ventas">
                 <h1>Reporte de Usuario</h1>
                 <div
-                    style={{display: "flex", justifyContent:"space-around"}}
+                    style={{display: "flex", justifyContent:"space-around", flexWrap:"wrap"}}
                 >
                     <div>
                         <label htmlFor="">Fecha Inicio</label>
@@ -264,7 +265,7 @@ const ControlVentas = () => {
                         />
                     </div>
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-primary mt-2"
                         onClick={handleObtenerVentasUsuarios}
                     >
                         Buscar Ventas
@@ -287,6 +288,7 @@ const ControlVentas = () => {
             </div>
             </Tab>
         </Tabs>
+        </div>
     )
 }
 

@@ -3,12 +3,13 @@ import {TiDeleteOutline} from 'react-icons/ti';
 import { useDispatch } from 'react-redux';
 import { deleteStock } from '../Redux/actions/productosActions';
 
-const ListadoStock = ({stocks}) => {
+const ListadoStock = ({stocks,setShowListadoStock}) => {
 
     const dispatch = useDispatch();
 
     const handleDeleteStock = (id) => {
         dispatch(deleteStock(id));
+        setShowListadoStock(false);
     }
 
     return (
