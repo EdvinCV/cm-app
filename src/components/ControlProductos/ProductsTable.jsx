@@ -12,7 +12,6 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
     // STATE
     const [admin, setAdmin] = useState(false);
     const [actualPage, setActualPage] = useState(1);
-    let totalPages = Math.ceil(totalProductos/10);
     
     useEffect(() => {
       if(usuario){
@@ -29,32 +28,6 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
     useEffect(() => {
       dispatch(obtenerProductos(actualPage));
     }, [actualPage, dispatch])
-
-    const paginacion = () => {
-      let pags = [];
-      for(let i=1; i <= totalPages; i++){
-        if(i===actualPage){
-          pags.push(<li key={i} className="page-item active"><a className="page-link" href="/#">{i}</a></li>);
-        } else {
-          pags.push(<li key={i} className="page-item"><a className="page-link" href="/#">{i}</a></li>);
-        }
-      }
-      return pags;
-    }
-
-    const nextPage = () => {
-      if((actualPage+1) <= totalPages){
-        setActualPage(actualPage+1);
-      }
-    }
-
-    const previousPage = () => {
-      if((actualPage-1) > 0){
-        setActualPage(actualPage-1);
-      }
-    }
-
-
 
     return (
       <>
@@ -73,6 +46,8 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
                   <th scope="col">Precio</th>
                 )
             }
+            <th scope="col">Color</th>
+            <th scope="col">Disponible</th>
             {
               admin &&
                 <>
@@ -91,16 +66,18 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
               >
               <th scope="row">{index+1}</th>
               <td>{producto.name}</td>
-              <td>{producto.Categorium.name}</td>
+              <td>{producto.categoria}</td>
               {
                 admin ? (
                   <>
-                  <td>{producto.precioVenta ? producto.precioVenta : "---"}</td>
+                  <td>{producto.precioVenta ? `Q.${producto.precioVenta}` : "---"}</td>
                   </>
                 ) : (
-                  <td>{producto.precioVenta ? producto.precioVenta : "---"}</td>
+                  <td>{producto.precioVenta ? `Q.${producto.precioVenta}` : "---"}</td>
                 )
               }
+              <td>{producto.color ? producto.color : '---'}</td>
+              <td>{producto.disponible ? producto.disponible : 0}</td>
               {
                 admin &&
                   <>
@@ -110,7 +87,7 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
                         Stock
                         <BsListCheck 
                           size="20px"
-                        />
+                          />
                       </button>
                     </div>
                   </td>
@@ -141,32 +118,6 @@ const ProductsTable = ({data, handleSelectProducto, handleDelete, usuario, total
           }
         </tbody>
         </table>
-      <div
-        style={{display:"flex", justifyContent:"center", overflowX:"auto"}}
-      >
-        <ul className="pagination pagination-sm">
-          <li 
-            className="page-item"
-            onClick={previousPage}  
-          >
-            <a className="page-link" href="/#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {
-            paginacion()
-          }
-          <li 
-            className="page-item"
-            onClick={nextPage}
-          >
-            <a className="page-link" href="/#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      
           </>
     )
 }

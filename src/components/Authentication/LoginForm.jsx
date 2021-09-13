@@ -45,14 +45,14 @@ const LoginForm = (props) => {
                     name="username"
                     type="text"
                     component={renderField}
-                    label="USUARIO"
+                    label="Usuario"
                 />
                 <br/>
                 <Field
                     name="password"
                     type="password"
                     component={renderField}
-                    label="CONTRASEÑA"
+                    label="Contraseña"
                     
                 />
             </div>

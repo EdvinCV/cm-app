@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {obtenerListadoVentasHoy, obtenerVentas, obtenerVentasUsuarios} from '../Redux/actions/ventasActions';
+import {getReporteVentasGanancias, obtenerListadoVentasHoy, obtenerVentas, obtenerVentasUsuarios} from '../Redux/actions/ventasActions';
 import VentasTable from './VentasTable';
 import Swal from 'sweetalert2';
 import Loader from 'react-loader-spinner';
@@ -11,6 +11,7 @@ import { useRef } from 'react';
 import Recibo from './Recibo';
 import { Tab } from 'bootstrap';
 import ReporteUsuarios from './ReporteUsuarios';
+import ReporteGanancias from './ReporteGanancias';
 
 const ControlVentas = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const ControlVentas = () => {
         fechaFin: null
     });
     const [formFechasReporte, setFormFechasReporte] = useState({
+        fechaInicio: null,
+        fechaFin: null
+    });
+    const [formFechasGanancia, setFormFechasGanancia] = useState({
         fechaInicio: null,
         fechaFin: null
     });
@@ -32,6 +37,7 @@ const ControlVentas = () => {
 
     const ventas = useSelector((state) => state.ventas.ventas);
     const reporteVentasUsuarios = useSelector((state) => state.ventas.reporteVentasUsuarios);
+    const reporteGanancias = useSelector((state) => state.ventas.reporteGanancias);
     const ventaSeleccionada = useSelector((state) => state.ventas.ventaSeleccionada);
 
     const handlePrint = useReactToPrint({
@@ -44,6 +50,10 @@ const ControlVentas = () => {
 
     const handleInputChangeReporte = (e) => {
         setFormFechasReporte({...formFechasReporte,[e.target.name] : e.target.value});
+    }
+
+    const handleInputChangeGanancia = (e) => {
+        setFormFechasGanancia({...formFechasGanancia,[e.target.name] : e.target.value});
     }
 
     const handleObtenerVentas = () => {
@@ -73,6 +83,19 @@ const ControlVentas = () => {
             );
         } else {
             dispatch(obtenerVentasUsuarios(formFechasReporte));
+        }
+    }
+
+    const handleObtenerVentasGanancias = () => {
+        const {fechaInicio, fechaFin} = formFechasGanancia;
+        if(!fechaInicio || !fechaFin){
+            Swal.fire(
+                'Debe seleccionar dos fechas.',
+                'ChatMóvil.',
+                'error'
+            );
+        } else {
+            dispatch(getReporteVentasGanancias(formFechasGanancia));
         }
     }
 
@@ -279,6 +302,55 @@ const ControlVentas = () => {
                     reporteVentasUsuarios ? (
                         <ReporteUsuarios
                             data={reporteVentasUsuarios}
+                        />
+                    ) : (
+                        <p>...</p>
+                    )
+                }
+            </div>
+            </div>
+            </Tab>
+            <Tab eventKey="ganancias" title="Reporte Ganancias">
+            <div className="contenedor-ventas">
+                <h1>Reporte de Ganancias</h1>
+                <div
+                    style={{display: "flex", justifyContent:"space-around", flexWrap:"wrap"}}
+                >
+                    <div>
+                        <label htmlFor="">Fecha Inicio</label>
+                        <input
+                                name="fechaInicio"
+                                className="form-control md-4"
+                                type="date"
+                                value={formFechasGanancia.formInicio}
+                                onChange={handleInputChangeGanancia}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="">Fecha Fin</label>
+                        <input
+                                name="fechaFin"
+                                className="form-control md-4"
+                                type="date"
+                                value={formFechasGanancia.formFin}
+                                onChange={handleInputChangeGanancia}
+                        />
+                    </div>
+                    <button
+                        className="btn btn-primary mt-2"
+                        onClick={handleObtenerVentasGanancias}
+                    >
+                        Generar Reporte
+                    </button>
+                </div>
+                <hr />
+                <div
+                    style={{overflowY: "scroll", maxHeight: "400px"}}
+                >
+                {
+                    reporteGanancias ? (
+                        <ReporteGanancias
+                            data={reporteGanancias}
                         />
                     ) : (
                         <p>...</p>

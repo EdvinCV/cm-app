@@ -15,7 +15,7 @@
     width: 100%;
     height: 100vh;
     /* background-image: radial-gradient(circle at 50% -20.71%, #ff57d2 0, #ff4edb 12.5%, #f046e3 25%, #d63feb 37.5%, #b53cf2 50%, #8c3df9 62.5%, #4f40ff 75%, #0046ff 87.5%, #004bff 100%); */
-    background-image: linear-gradient(175deg, #008fc3 0, #008dcf 5.56%, #008cd9 11.11%, #0089e1 16.67%, #0087e7 22.22%, #0083eb 27.78%, #007fed 33.33%, #007aed 38.89%, #0074ea 44.44%, #486ee5 50%, #6d67de 55.56%, #875fd5 61.11%, #9c57cb 66.67%, #ae4ebe 72.22%, #bc45b1 77.78%, #c83da3 83.33%, #d03594 88.89%, #d73085 94.44%, #db2d75 100%);
+    background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
 }
 
 .log-card {

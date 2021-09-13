@@ -38,7 +38,7 @@ const ReporteCategorias = ({data, setShowForm}) => {
                     <th scope="row">{index+1}</th>
                     <td>{venta.name}</td>
                     <td>{venta.cantidad}</td>
-                    <td>{venta.total}</td>
+                    <td>Q.{venta.total}</td>
                     </tr>
                 ))
             }

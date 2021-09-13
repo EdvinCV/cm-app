@@ -20,8 +20,8 @@ export const loginUser = (user) => {
             });
             Swal.fire({
                 imageUrl: "icons/chat.png",
-                imageWidth: 100,
-                title: `Bienvenido al sistema, ${resp.data.user.name}`,
+                imageWidth: 200,
+                title: `Bienvenido ${resp.data.user.name}`,
                 html:'Chat-Móvil',
                 icon:'success',
                 confirmButtonText: 'Continuar'
@@ -46,8 +46,8 @@ export const userLogout = () => {
         });
         Swal.fire({
             imageUrl: "icons/chat.png",
-            imageWidth: 100,
-            title: `Has finalizado sesión correctamente.`,
+            imageWidth: 200,
+            title: `Ha finalizado sesión correctamente.`,
             html:'Chat-Móvil',
             icon:'success',
             confirmButtonText: 'Cerrar'

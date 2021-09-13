@@ -15,9 +15,8 @@
     color: white;
     background-color: #7f5a83;
     background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
-    border-radius: 10px;
     padding: 20px;
-    height: 85vh;
+    height: 89vh;
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -124,10 +123,6 @@
     color: #f50092;
 }
 
-.contenedor-ventasGeneral {
-
-}
-
 @media (max-width: 330px) {
     .contenedor-ventasGeneral {
         margin-top: 30px;
@@ -192,19 +187,16 @@
     height: 30px;
     border-radius: 10px;
 }
-
 .divCaja {
     text-align: center;
     margin-top: 100px;
     color:#f50092;;
 }
-
 .controlCaja {
     padding: 20px;
     border-radius: 20px;
     text-align: center;
 }
-
 div.contenedor1{
     width: 180px;
     height: 200px;
@@ -213,7 +205,6 @@ div.contenedor1{
     margin-top: 2px;
     -webkit-transition: height 0.4s;
 }
-
 div.contenedor0{
     width: 20px;
     height: 220px;
@@ -223,11 +214,9 @@ div.contenedor0{
 div#cero{
     background-color: rgb(255, 255, 255,0);
 }
-
 div#uno{
     background-color: rgb(208, 101, 3);
 }
-
 div#dos{
     background-color: rgb(233, 147, 26);
 }
@@ -243,7 +232,6 @@ div#cinco{
 div#seis{
     background-color: rgb(22, 63, 92);
 }
-
 img.icon{
     display: block;
     margin:50px auto;
@@ -265,12 +253,10 @@ p.texto{
 div.contenedor1:hover{
     height: 260px;
 }
-
 div.contenedor1:hover p.texto{
     padding-top: 50px;
     opacity: 1;
 }
 div.contenedor1:hover img.icon{
     -webkit-box-shadow:0px 0px 0px 10px rgba(255, 255, 255, 0.5);
-
 }

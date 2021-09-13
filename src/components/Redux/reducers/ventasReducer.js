@@ -16,7 +16,8 @@ import {
     OBTENER_VENTAS_HOY,
     OBTENER_VENTAS_USUARIOS,
     OBTENER_LISTADO_VENTAS_HOY,
-    OBTENER_REPORTE_VENTAS_CATEGORIA
+    OBTENER_REPORTE_VENTAS_CATEGORIA,
+    OBTENER_VENTAS_GANANCIAS
 } from "../actionTypes";
 
 
@@ -35,7 +36,8 @@ const initialState = {
     recibo: null,
     reporteVentas: null,
     reporteVentasUsuarios: null,
-    reporteVentasCategoria: null
+    reporteVentasCategoria: null,
+    reporteGanancias: null
 };
 
 // REDUCER FUNCTION
@@ -65,6 +67,11 @@ const ventasReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ventasHoy: action.ventas
+            }
+        case OBTENER_VENTAS_GANANCIAS:
+            return {
+                ...state,
+                reporteGanancias: action.ventas
             }
         case OBTENER_VENTAS_USUARIOS:
             return {

@@ -7,6 +7,7 @@ const ReporteStock = ({data}) => {
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Categoría</th>
                     <th scope="col">Producto</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio Compra</th>
@@ -21,10 +22,11 @@ const ReporteStock = ({data}) => {
                         key={index}
                     >
                         <th scope="row">{index+1}</th>
+                        <td>{producto.categoria}</td>
                         <td>{producto.name}-{producto.color}</td>
                         <td>{producto.cantidadComprada}</td>
-                        <td>{producto.precioCompra}</td>
-                        <td>{producto.precioCompra * producto.cantidadComprada}</td>
+                        <td>Q.{producto.precioCompra}</td>
+                        <td>Q.{producto.precioCompra * producto.cantidadComprada}</td>
                         <td>{new Date(producto.createdAt).toLocaleDateString()}</td>
                     </tr>
                 ))

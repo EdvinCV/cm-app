@@ -79,7 +79,7 @@ const Productos = () => {
         if(productos){
             let productsTransform = productos.map((prod) => ({
                 value: prod.id,
-                label: `${prod.name}-${prod.Categorium.name}`
+                label: `${prod.categoria}-${prod.name}${prod.color != null ? `-${prod.color}` : ''}`
             }));
             setProductOptions(productsTransform);
         }

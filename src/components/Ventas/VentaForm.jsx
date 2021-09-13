@@ -101,7 +101,7 @@ const VentaForm = ({setPrintRecibo}) => {
                 className="form-control"
                 type="number"
                 placeholder="Ingrese NIT"
-                onInput={(e) => e.target.value = e.target.value.slice(0, 20)}
+                onInput={(e) => e.target.value = e.target.value.slice(0, 13)}
                 onChange={handleInputChange}
             />
             {/* DPI DEL CLIENTE */}
@@ -134,7 +134,7 @@ const VentaForm = ({setPrintRecibo}) => {
                         className="form-control"
                         type="number"
                         placeholder="Ingrese número de teléfono"
-                        onInput={(e) => e.target.value = e.target.value.slice(0, 16)}
+                        onInput={(e) => e.target.value = e.target.value.slice(0, 8)}
                         onChange={handleInputChange}
                         required
                     />

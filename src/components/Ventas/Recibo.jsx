@@ -11,14 +11,14 @@ class Recibo extends Component {
             >
                 {/* ENCABEZADO COMPROBANTE */}
                 <div>
-                    <img src="icons/recibo.png" alt="ChatMovil" width="200px"/>
+                    <center> <img src="icons/recibo.png" alt="ChatMovil" width="200px"/> </center>
                 </div>
                 <div>
                     <h5>Comprobante</h5>
                     <h6>No. {data.correlativo}</h6>
                 </div>
                 <hr 
-                    style={{color:"blue", height:"4px"}}
+                    style={{color:"blue", height:"2px"}}
                 />
                 {/* INFO DEL COMPROBANTE */}
                 <div>
@@ -27,8 +27,8 @@ class Recibo extends Component {
                     <h6>NIT: {data.nit ? data.nit : 'CF'}</h6>
                     <h6>DIRECCIÓN: {data.direccion}</h6>
                 </div>
-                <hr
-                    style={{color:"blue", height:"4px"}}
+                <hr 
+                    style={{color:"blue", height:"2px"}}
                 />
                 {/* DESCRIPCION DEL ENCABEZADO */}
                 <div
@@ -46,11 +46,11 @@ class Recibo extends Component {
                         <p>
                             PRECIO
                         </p>
-                        <h6>Q.{data.total}</h6>
+                        <h6>Q.{data.Producto.precioVenta}</h6>
                     </div>
                 </div>
                 <hr 
-                    style={{color:"blue", height:"4px"}}
+                    style={{color:"blue", height:"2px"}}
                 />
                 <div>
                     <h6>IMEI: {data.imei ? data.imei : '--------------------'}</h6>
@@ -76,17 +76,11 @@ class Recibo extends Component {
                     </p>
                     <h6><b>CONDICIONES DE GARANTÍA</b></h6>
                     <p>
-                        1.El dispositivo no carga y/o dura poco tiempo con carga.
-                        2.La pantalla no funciona.
+                        1.El dispositivo no carga y/o dura poco tiempo con carga........................
+				.............................
+                        2.La pantalla no funciona...............................
                         3.El micrófono y bocina presentan problemas.
                         4.La cámara presenta inconvenientes.
-                    </p>
-                    <p>
-                        La garantía está limitada a las condiciones descritas a continuación:
-                        1.- El dispositivo presenta signos o señales de maltrato físico o abuso como golpes, rayones, grietas o partiduras en su estructura física.
-                        2.- El dispositivo presenta rastros de humedad.
-                        3.- Las fallas o problemas de software no están cubiertos por la garantía, esto incluye fallas debido a  actualizaciones y/o modificaciones
-                        del software original o descargas de aplicaciones que no sean las originales pre-instaladas de fábrica en el equipo.
                     </p>
                     <p>
                         <b>Accesorios:</b>
@@ -95,8 +89,12 @@ class Recibo extends Component {
                     </p>
                     <p>
                         EL TIEMPO ESTIMADO DE ENTREGA PARA CUBRIR GARANTIA (Tigo, Claro, Liberado) ES DE 15 DIAS HABILES.
+                    </p>
+                    <p>
                         El cliente acepta las condiciones de garantía descritas en este documento.
                     </p>
+                <p>
+                        Los dispositivos pierden garantia si presentan rastros de humedad o golpes</p>
                 </div>
                 <p><b>GRACIAS POR SU COMPRA</b></p>
                 <div

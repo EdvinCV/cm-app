@@ -1,10 +1,11 @@
 // Actions types
 import {
-    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA
+    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA, OBTENER_VENTAS_GANANCIAS
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
 import Swal from 'sweetalert2';
+import {useHistory} from 'react-router-dom';
 
 /* OBTENER EL TOTAL DE VENTAS REALIZADAS */
 export const obtenerTotalVentas = () => {
@@ -145,18 +146,32 @@ export const generarVenta = (formValues) => {
                 usuario: state.usuarios.me
             }
             const {data} = await clientToken.post('api/venta', venta);
+            await dispatch({
+                type: VENTA_REALIZADA,
+                recibo: data.recibo
+            });
+            await dispatch({
+                type: "ELIMINAR_RECIBO"
+            })
             Swal.fire(
                 'Venta realizada correctamente.',
                 'ChatMóvil.',
                 'success'
             );
-            await dispatch({
-                type: VENTA_REALIZADA,
-                recibo: data.recibo
-            });
-            dispatch({
-                type: "ELIMINAR_RECIBO"
-            })
+            // Swal.fire({
+            //     title: 'Do you want to save the changes?',
+            //     showDenyButton: true,
+            //     showCancelButton: true,
+            //     confirmButtonText: 'Save',
+            //     denyButtonText: `Don't save`,
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         const history = useHistory()
+            //         (() => {
+            //             location.href = "/ventasssss";
+            //         })()
+            //     }
+            // });
         }catch(error){
             console.log(error);
             Swal.fire(
@@ -276,6 +291,23 @@ export const getReporteVentas = ({fechaInicio, fechaFin}) => {
             dispatch({
                 type: OBTENER_REPORTE_VENTAS,
                 ventas: data
+            });
+        } catch(error) {
+            dispatch({
+                type: OBTENER_VENTAS_ERROR
+            });
+        }
+    }
+}
+// GET REPORTE GANANCIAS
+export const getReporteVentasGanancias = ({fechaInicio, fechaFin}) => {
+    return async (dispatch) => {
+        try {
+            const {data} = await clientToken.get('api/venta/ganancias', {params: {fechaInicio,fechaFin}});
+            console.log("GANANCIAS",data);
+            dispatch({
+                type: OBTENER_VENTAS_GANANCIAS,
+                ventas: data.results
             });
         } catch(error) {
             dispatch({

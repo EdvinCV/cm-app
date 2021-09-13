@@ -26,12 +26,12 @@ const Login = () => {
         <div className="log-card">
             <div className="card-transparent m-3 card-login">
                 <div
-                    style={{backgroundColor: "white", borderRadius:"10px", opacity:0.7}}
+                    style={{borderRadius:"80px", opacity:0.8, maxWidth:"350px", margin:"0 auto"}}
                 >
-                    <img className="card-img-top" src="icons/Logo.png" alt="ChatMovil" style={{width:"280px", margin:"0 auto"}}/>
+                    
+                    <img className="card-img-top" src="icons/Logo.png" alt="ChatMovil" style={{width:"300px", margin:"0 auto"}}/>
                 </div>
                 <div className="card-body">
-                    <h5 className="card-title">BIENVENIDO</h5>
                     <LoginForm
                         onSubmit={handleLogin}
                     />
