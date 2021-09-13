@@ -309,7 +309,7 @@ const Productos = () => {
                     </div>
                     <hr/>
                     <div
-                        style={{overflowY: "scroll", "textAlign": "center"}}
+                        style={{overflowY: "scroll", textAlign: "center", maxHeight:"700px"}}
                     >
                         {
                             productos ? (
