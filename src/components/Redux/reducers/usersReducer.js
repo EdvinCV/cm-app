@@ -1,6 +1,6 @@
 // ACTION TYPES
 
-import {OBTENER_USUARIOS, CREAR_USUARIO, SELECCIONAR_USUARIO, GET_ME, ELIMINAR_USUARIO} from "../actionTypes";
+import {OBTENER_USUARIOS, CREAR_USUARIO, SELECCIONAR_USUARIO, GET_ME, ELIMINAR_USUARIO, CLEAR_USUARIOS} from "../actionTypes";
 
 
 // INITIAL STATE
@@ -40,6 +40,8 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 usuarios: action.usuarios
             }
+        case CLEAR_USUARIOS:
+            return initialState;
         default:
             return state;
     }

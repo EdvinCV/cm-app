@@ -9,6 +9,7 @@ import UserForm from './UserForm';
 import UserEditForm from './UserEditForm';
 import Swal from 'sweetalert2';
 import { clientToken } from '../../config/axios';
+import { Redirect } from 'react-router-dom';
 
 const ListUsers = () => {
     const dispatch = useDispatch();
@@ -119,6 +120,16 @@ const ListUsers = () => {
 
     const usuarios = useSelector((state) => state.usuarios.usuarios);
     
+    if(usuarioVerificacion){
+        if(usuarioVerificacion.me){
+            console.log("USUARIO VER",usuarioVerificacion.me.rol);
+            if(usuarioVerificacion.me.rol !== "ADMIN"){
+                return (
+                    <Redirect to="/home" />
+                )
+            }
+        }
+    }
     return (
         <div className="contenedor-usuarios">
             <div
@@ -191,5 +202,6 @@ const ListUsers = () => {
             </Modal>
         </div>
     )
+
 }
 export default ListUsers;

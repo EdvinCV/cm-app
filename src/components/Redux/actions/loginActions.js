@@ -2,7 +2,14 @@
 import {
     LOGIN_EXITOSO,
     LOGIN_ERROR,
-    LOGOUT
+    LOGOUT,
+    CLEAR_STORE,
+    CLEAR_AUTENTICACION,
+    CLEAR_CAJAS,
+    CLEAR_USUARIOS,
+    CLEAR_PRODUCTOS,
+    CLEAR_CATEGORIAS,
+    CLEAR_VENTAS
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {client} from '../../../config/axios';
@@ -40,10 +47,8 @@ export const loginUser = (user) => {
 }
 
 export const userLogout = () => {
-    return (dispatch) => {
-        dispatch({
-            type: LOGOUT
-        });
+    return async(dispatch) => {
+        dispatch({type: LOGOUT});
         Swal.fire({
             imageUrl: "icons/chat.png",
             imageWidth: 200,

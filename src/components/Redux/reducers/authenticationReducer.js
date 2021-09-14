@@ -1,6 +1,6 @@
 // ACTION TYPES
 
-import { LOGIN_ERROR, LOGIN_EXITOSO, LOGOUT } from "../actionTypes";
+import { CLEAR_AUTENTICACION, LOGIN_ERROR, LOGIN_EXITOSO, LOGOUT } from "../actionTypes";
 
 
 // INITIAL STATE
@@ -31,14 +31,17 @@ const authenticationReducer = (state = initialState, action) => {
                 errorResponse: true
             }
         case LOGOUT:
-            console.log("se cerró sesión");
             localStorage.removeItem("access_token");
+            localStorage.removeItem("id");
             return {
                 ...state,
                 access_token: null,
                 authenticated: false,
                 errorResponse: false
             }
+        case CLEAR_AUTENTICACION: {
+            return initialState;
+        }
         default:
             return state;
     }

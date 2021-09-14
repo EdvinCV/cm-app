@@ -5,7 +5,6 @@ import {
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
 import Swal from 'sweetalert2';
-import {useHistory} from 'react-router-dom';
 
 /* OBTENER EL TOTAL DE VENTAS REALIZADAS */
 export const obtenerTotalVentas = () => {
@@ -92,10 +91,11 @@ export const obtenerVentasHoy = () => {
 }
 
 /* OBTENER TODAS LAS VENTAS CANCELADAS EN EL SISTEMA */
-export const obtenerVentasCanceladas = () => {
+export const obtenerVentasCanceladas = ({fechaInicio, fechaFin}) => {
     return async (dispatch) => {
         try {
-            const ventas = await clientToken.get('api/venta/canceladas');
+            const ventas = await clientToken.get('api/venta/canceladas', {params: {inicio: fechaInicio, fin: fechaFin}});
+            console.log("DEITA",ventas);
             dispatch({
                 type: OBTENER_VENTAS_CANCELADAS,
                 ventas: ventas.data.ventas
@@ -186,7 +186,8 @@ export const generarVenta = (formValues) => {
 export const cancelarVenta = (venta) => {
     return async (dispatch) => {
         try {
-            await clientToken.post('api/venta/delete', venta);
+            
+            await clientToken.post('api/venta/delete', {venta});
             const ventas = await clientToken.get('api/venta');
             const ventasHoy = await clientToken.get('api/venta');
             dispatch({

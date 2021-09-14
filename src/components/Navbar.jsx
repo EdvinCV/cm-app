@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { userLogout } from './Redux/actions/loginActions';
 import { useHistory } from 'react-router-dom';
 import { obtenerUsuario } from './Redux/actions/usersActions';
@@ -20,6 +20,8 @@ const Navbar = () => {
         history.push("/login");
     }
 
+    const usuario = useSelector((state) => state.usuarios.me);
+
     return (
         <nav className="navbar navbar-dark bg-dark fixed-top">
             <div className="container-fluid">
@@ -28,7 +30,7 @@ const Navbar = () => {
                     onClick={() => history.push("/home")}
                 >
                     <img src="icons/inicio.png" width="60px" alt="ChatMovil" />
-                    ChatMóvil
+                    ChatMóvil - {usuario && usuario.name}
                 </span>
                 <span
                     className="navbar-text"

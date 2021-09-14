@@ -17,7 +17,8 @@ import {
     OBTENER_VENTAS_USUARIOS,
     OBTENER_LISTADO_VENTAS_HOY,
     OBTENER_REPORTE_VENTAS_CATEGORIA,
-    OBTENER_VENTAS_GANANCIAS
+    OBTENER_VENTAS_GANANCIAS,
+    CLEAR_VENTAS
 } from "../actionTypes";
 
 
@@ -141,6 +142,8 @@ const ventasReducer = (state = initialState, action) => {
                 ...state,
                 recibo: null
             }
+        case CLEAR_VENTAS: 
+            return initialState;
         default:
             return state;
     }

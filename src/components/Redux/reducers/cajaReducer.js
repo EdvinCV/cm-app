@@ -1,6 +1,6 @@
 // ACTION TYPES
 
-import {ABRIR_CAJA, OBTENER_CAJA, OBTENER_CAJAS_GENERAL} from "../actionTypes";
+import {ABRIR_CAJA, CLEAR_CAJAS, OBTENER_CAJA, OBTENER_CAJAS_GENERAL} from "../actionTypes";
 
 
 // INITIAL STATE
@@ -32,6 +32,9 @@ const cajaReducer = (state = initialState, action) => {
                 cajaActual: action.cajaActual,
                 cajaAbierta: action.cajaAbierta
             }
+        case CLEAR_CAJAS: {
+            return initialState;
+        }
         default:
             return state;
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {FaRegEye} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {cancelarVentaCaja, seleccionarVenta} from '../Redux/actions/ventasActions';
@@ -13,6 +13,7 @@ const VentasTable = ({data, setShowForm}) => {
     const [actualPage, setActualPage] = useState(1);
     let totalPages = Math.ceil(1/10);
 
+    const usuarioVerificacion = useSelector((state) => state.usuarios);
 
     useEffect(() => {
         
@@ -49,7 +50,7 @@ const VentasTable = ({data, setShowForm}) => {
 
     const handleCancelVenta = (venta) => {
         Swal.fire({
-            title: 'Desea cancelar la venta?',
+            title: 'Deseaszz cancelar la venta?',
             showCancelButton: true,
             confirmButtonText: `Cancelar Venta`,
             cancelButtonText: `Cerrar`
@@ -67,7 +68,7 @@ const VentasTable = ({data, setShowForm}) => {
                     cancelButtonText: 'Cancelar'
                 })
                 if (text) {
-                    dispatch(cancelarVentaCaja({venta, razon: text}));
+                    dispatch(cancelarVentaCaja({venta, razon: text,id:usuarioVerificacion.me.id}));
                 }
             }
         });
@@ -92,7 +93,7 @@ const VentasTable = ({data, setShowForm}) => {
             {
                 data.map((venta, index) => (
                     <tr
-                        key={venta.id}
+                        key={venta.correlativo}
                     >
                     <th scope="row">{index+1}</th>
                     <td>{venta.correlativo}</td>
