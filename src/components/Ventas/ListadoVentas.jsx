@@ -12,6 +12,8 @@ import Recibo from './Recibo';
 import { Tab } from 'bootstrap';
 import ReporteUsuarios from './ReporteUsuarios';
 import ReporteGanancias from './ReporteGanancias';
+import { obtenerUsuario } from '../Redux/actions/usersActions';
+import { Redirect } from 'react-router-dom';
 
 const ControlVentas = () => {
     const dispatch = useDispatch();
@@ -32,8 +34,10 @@ const ControlVentas = () => {
 
     // Obtener ventas
     useEffect(() => {
-        // dispatch(obtenerVentas());
+        dispatch(obtenerUsuario());
     }, [dispatch])
+
+    const usuarioVerificacion = useSelector((state) => state.usuarios);
 
     const ventas = useSelector((state) => state.ventas.ventas);
     const reporteVentasUsuarios = useSelector((state) => state.ventas.reporteVentasUsuarios);
@@ -99,6 +103,16 @@ const ControlVentas = () => {
         }
     }
 
+    if(usuarioVerificacion){
+        if(usuarioVerificacion.me){
+            console.log("USUARIO VER",usuarioVerificacion.me.rol);
+            if(usuarioVerificacion.me.rol !== "ADMIN"){
+                return (
+                    <Redirect to="/home" />
+                )
+            }
+        }
+    }
     return (
         <div className="contenedor-ventasGeneral">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">

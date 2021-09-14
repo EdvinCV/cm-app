@@ -1,6 +1,6 @@
 // ACTION TYPES
 
-import {OBTENER_PRODUCTOS, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK} from "../actionTypes";
+import {OBTENER_PRODUCTOS, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK, CLEAR_PRODUCTOS} from "../actionTypes";
 
 
 // INITIAL STATE
@@ -67,6 +67,8 @@ const productosReducer = (state = initialState, action) => {
                 ...state,
                 reporteStock: action.productos
             }
+        case CLEAR_PRODUCTOS:
+            return initialState;
         default:
             return state;
     }

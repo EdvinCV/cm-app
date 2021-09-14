@@ -1,5 +1,6 @@
+import {React, useEffect} from 'react';
 import Login from './components/Authentication/Login';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './components/Redux/store';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './components/Home';
@@ -13,8 +14,10 @@ import ListadoCajas from './components/Caja/ListadoCajas';
 import ListUsers from './components/Users/ListUsers';
 import './index.css';
 import ListadoVentasCanceladas from './components/Ventas/ListadoVentasCanceladas';
+import { obtenerUsuario } from './components/Redux/actions/usersActions';
 
 function App() {
+  
   return (
     <Router>
       <Provider store={store}>

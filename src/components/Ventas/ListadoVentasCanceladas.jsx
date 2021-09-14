@@ -4,55 +4,69 @@ import { obtenerVentasCanceladas } from '../Redux/actions/ventasActions';
 import Loader from 'react-loader-spinner';
 import {Col, Container, Modal, Row} from 'react-bootstrap';
 import VentasCanceladasTable from './VentasCanceladasTable';
+import Swal from 'sweetalert2';
 
 const ListadoVentasCanceladas = () => {
     const dispatch = useDispatch();
-    const [ventasSeleccionadas, setVentasSeleccionadas] = useState([]);
-    const [buscador, setBuscador] = useState("");
     const [showDetail, setShowDetail] = useState(false);
-
-    // Obtener ventas
-    useEffect(() => {
-        dispatch(obtenerVentasCanceladas());
-    }, [dispatch])
 
     const ventasCanceladas = useSelector((state) => state.ventas.ventasCanceladas);
     const ventaCanceladaSeleccionada = useSelector((state) => state.ventas.ventaCanceladaSeleccionada);
 
-    useEffect(() => {
-        setVentasSeleccionadas(ventasCanceladas);
-    }, [ventasCanceladas, setVentasSeleccionadas])
+    const [formFechasReporte, setFormFechasReporte] = useState({
+        fechaInicio: null,
+        fechaFin: null
+    });
 
-    const handleChangeBuscador = (e) => {
-        setBuscador(e.target.value);
+    const handleInputChangeReporte = (e) => {
+        setFormFechasReporte({...formFechasReporte,[e.target.name] : e.target.value});
     }
 
-    useEffect(() => {
-        if(buscador !== ""){
-            const nuevasVentas = ventasCanceladas.filter(
-                (venta) => 
-                    (venta.Producto.name.search(buscador) !== -1) || (venta.tipoVenta.search(buscador) !== -1));
-            setVentasSeleccionadas(nuevasVentas);
+    const handleObtenerVentasCanceladas = () => {
+        const {fechaInicio, fechaFin} = formFechasReporte;
+        if(!fechaInicio || !fechaFin){
+            Swal.fire(
+                'Debe seleccionar dos fechas.',
+                'ChatMóvil.',
+                'error'
+            );
         } else {
-            setVentasSeleccionadas(ventasCanceladas);
+            dispatch(obtenerVentasCanceladas(formFechasReporte));
         }
-    }, [buscador, ventasCanceladas])
-
+    }
     return (
         <div className="contenedor-ventas">
             <h1>Listado Ventas Canceladas</h1>
             <div
-                style={{display: "flex", justifyContent: "space-between"}}
-            >
-                {/* <input
-                        style={{maxWidth: "20%"}}
-                        className="form-control md-4"
-                        type="text"
-                        value={buscador}
-                        onChange={handleChangeBuscador}
-                        placeholder="Buscar..."
-                /> */}
-            </div>
+                    style={{display: "flex", justifyContent:"space-around", flexWrap:"wrap"}}
+                >
+                    <div>
+                        <label htmlFor="">Fecha Inicio</label>
+                        <input
+                                name="fechaInicio"
+                                className="form-control md-4"
+                                type="date"
+                                value={formFechasReporte.formInicio}
+                                onChange={handleInputChangeReporte}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="">Fecha Fin</label>
+                        <input
+                                name="fechaFin"
+                                className="form-control md-4"
+                                type="date"
+                                value={formFechasReporte.formFin}
+                                onChange={handleInputChangeReporte}
+                        />
+                    </div>
+                    <button
+                        className="btn btn-primary mt-2"
+                        onClick={handleObtenerVentasCanceladas}
+                    >
+                        Buscar Ventas
+                    </button>
+                </div>
             <hr/>
             <div
                 style={{overflowY: "scroll", maxHeight: "400px"}}
