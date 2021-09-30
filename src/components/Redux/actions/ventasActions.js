@@ -230,9 +230,12 @@ export const cancelarVentaCaja = (venta) => {
 
 /* AGREGAR PRODUCTO PARA VENDER */
 export const agregarProductoCarrito = (producto) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
             // Generar la estructura del objeto producto.
+            const state = getState();
+            const productosCarrito = state.ventas.productosSeleccionados;
+            let productoExistente = false;
             producto = {
                 ...producto,
                 precioVenta: parseInt(producto.precioVenta),
@@ -240,14 +243,29 @@ export const agregarProductoCarrito = (producto) => {
                 idProducto: producto.id,
                 precioFinal: parseInt(producto.precioVenta)
             }
-            // Si el producto es Kit o Accesorio se elige el precio sino se espera a que se ingrese
-            console.log("PRODUCTO:::::",producto);
-            const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") ? producto.precioVenta : 0;
-            dispatch({
-                type: AGREGAR_PRODUCTO_CARRITO,
-                producto: producto,
-                total
-            });
+            if(productosCarrito){
+                
+                for(let p of productosCarrito){
+                    if(p.id===producto.id){
+                        productoExistente=true;
+                        break;
+                    }
+                }
+            }
+            if(productoExistente===true){
+                Swal.fire(
+                    'Producto ya existente.',
+                    'ChatMóvil.',
+                    'error'
+                );   
+            }else {
+                const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") ? producto.precioVenta : 0;
+                dispatch({
+                    type: AGREGAR_PRODUCTO_CARRITO,
+                    producto: producto,
+                    total
+                });
+            }
         } catch(error){
             console.log(error);
         }

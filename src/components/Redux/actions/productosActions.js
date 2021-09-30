@@ -29,7 +29,8 @@ export const obtenerProductos = (page=1,buscador='') => {
             const productos = await clientToken.get('api/producto', {params: {page, buscador}});
             dispatch({
                 type: OBTENER_PRODUCTOS,
-                productos: productos.data.productos
+                productos: productos.data.productos,
+                productosNoDisponibles: productos.data.productosNoDisponibles
             });
         } catch(error) {
             dispatch({
@@ -90,7 +91,8 @@ export const crearProducto = (producto, buscador='') => {
             );
             dispatch({
                 type: CREAR_PRODUCTO,
-                productos: productos.data.productos
+                productos: productos.data.productos,
+                productosNoDisponibles: productos.data.productosNoDisponibles
             });
         } catch(error){
             console.log(error);
@@ -112,7 +114,8 @@ export const crearProductoStock = (producto) => {
             );
             dispatch({
                 type: CREAR_PRODUCTO,
-                productos: productos.data.productos
+                productos: productos.data.productos,
+                productosNoDisponibles: productos.data.productosNoDisponibles
             });
         } catch(error){
             console.log(error);

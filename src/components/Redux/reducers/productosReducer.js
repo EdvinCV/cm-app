@@ -6,6 +6,7 @@ import {OBTENER_PRODUCTOS, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OB
 // INITIAL STATE
 const initialState = {
     productos: [],
+    productosNoDisponibles: [],
     productosVenta: null,
     listadoStock: null,
     loading: true,
@@ -28,6 +29,7 @@ const productosReducer = (state = initialState, action) => {
             return {
                 ...state,
                 productos: action.productos,
+                productosNoDisponibles: action.productosNoDisponibles,
                 errorResponse: false
             }
         case OBTENER_PRODUCTOS_VENTA:
@@ -44,6 +46,7 @@ const productosReducer = (state = initialState, action) => {
             return {
                 ...state,
                 productos: action.productos,
+                productosNoDisponibles: action.productosNoDisponibles,
                 errorResponse: false
             }
         case SELECTED_PRODUCT:

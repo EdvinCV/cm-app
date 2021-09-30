@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 
 class Recibo extends Component {
+    constructor(){
+        super();
+        this.state = {
+            totalVenta: 0
+        }
+        console.log(this.props);
+    }
+
+    getDerivedStateFrom
 
     render(){
         const data = this.props.infoRecibo ? this.props.infoRecibo : {};
@@ -8,7 +17,7 @@ class Recibo extends Component {
         return (
             // COMPROBANTE GENERAL
             <div
-                style={{width:"8cm", padding:"0.3cm", fontFamily:"Arial"}}
+                style={{width:"8cm", padding:"0.3cm", fontFamily:"Roboto"}}
             >
                 {/* ENCABEZADO COMPROBANTE */}
                 <div>
@@ -41,7 +50,7 @@ class Recibo extends Component {
                                     key={p.id}
                                 >
                                     <div style={{display:"flex", justifyContent:"space-between"}}>
-                                        <h6>{p.Producto.name}-{p.Producto.color}-{p.Producto.Categorium.name} - </h6>
+                                        <h6>{p.Producto.name}-{p.Producto.color}-{p.Producto.Categorium.name}</h6>
                                         <h6>Q.{p.precioFinal}</h6>
                                     </div>
                                     {/* AGREGAR TOTAL DE VENTA */}
@@ -59,6 +68,9 @@ class Recibo extends Component {
                                 </div>
                             ))
                         }
+                        <div>
+                            <h5>TOTAL VENTA: Q.{data.total}</h5>
+                        </div>
                     </div>
                 </div>
                 {/* CONDICIONES DE GARANTÍA */}

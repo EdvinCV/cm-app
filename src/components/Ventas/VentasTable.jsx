@@ -10,13 +10,18 @@ const VentasTable = ({data, setShowForm}) => {
     const dispatch = useDispatch();
     // STATE
     const [actualPage, setActualPage] = useState(1);
+    const [totalVendido, setTotalVendido] = useState(0);
     let totalPages = Math.ceil(1/10);
 
     const usuarioVerificacion = useSelector((state) => state.usuarios);
 
     useEffect(() => {
-        
-    }, [actualPage])
+        let total = 0;
+        for(let v of data){
+            total += parseInt(v.Total);
+        }
+        setTotalVendido(total);
+    }, [data])
 
     // const paginacion = () => {
     //     let pags = [];
@@ -90,6 +95,7 @@ const VentasTable = ({data, setShowForm}) => {
             }
             </tbody>
         </table>
+        <h5>Total Vendido: Q.{totalVendido}</h5>
         {/* <div
             style={{display:"flex", justifyContent:"center", overflowX:"auto"}}
         >
