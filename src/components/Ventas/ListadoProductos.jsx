@@ -19,9 +19,10 @@ const ListadoProductos = () => {
     const [productosSeleccionados, setProductosSeleccionados] = useState([]);
     // STORE
     const productos = useSelector((state) => state.productos.productosVenta); 
-    const productoSeleccionado = useSelector((state) => state.ventas.productoSeleccionado);
+    const productosSeleccionado = useSelector((state) => state.ventas.productosSeleccionados);
     const cajaAbierta = useSelector((state) => state.caja.cajaAbierta);
     const infoRecibo = useSelector((state) => state.ventas.recibo);
+    const productosVendidos = useSelector((state) => state.ventas.productosVendidos);
 
     // EFFECTS
     useEffect(() => {
@@ -95,6 +96,7 @@ const ListadoProductos = () => {
                         <Recibo 
                             ref={componentRef}
                             infoRecibo={infoRecibo}
+                            productos={productosVendidos}
                         />
                     </div>
             }
@@ -122,11 +124,16 @@ const ListadoProductos = () => {
                 <h5>Información Venta</h5>
                 <hr/>
                 {
-                    productoSeleccionado ? (
+                    productosSeleccionado ? (
                         <>
-                        <CardItem 
-                            producto={productoSeleccionado}
-                        />
+                        {
+                            productosSeleccionado.map((prod,index) => (
+                                <CardItem
+                                    key={prod.id}
+                                    producto={prod}
+                                />
+                            ))
+                        }
                         <hr/>
                         <VentaForm />
                         <div

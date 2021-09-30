@@ -96,6 +96,7 @@ export const editarUsuario = (usuario) => {
 export const seleccionarUsuario = (usuario) => {
     return async (dispatch) => {
         try {
+            usuario.password = null;
             dispatch({
                 type: SELECCIONAR_USUARIO,
                 usuario

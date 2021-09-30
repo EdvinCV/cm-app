@@ -51,11 +51,11 @@ let UserEditForm = (props) => {
             </div>
             <div className="mb-3">
                 <Field
-                    name="username"
-                    type="text"
+                    name="password"
+                    type="password"
                     component={renderField}
-                    placeholder="Ingrese el usuario"
-                    label="Usuario"
+                    placeholder="Ingrese la contraseña"
+                    label="Contraseña"
                 />
             </div>
             <div className="mb-3">

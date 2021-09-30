@@ -4,10 +4,11 @@ class Recibo extends Component {
 
     render(){
         const data = this.props.infoRecibo ? this.props.infoRecibo : {};
+        const prods = this.props.productos ? this.props.productos : [];
         return (
             // COMPROBANTE GENERAL
             <div
-                style={{width:"8cm", padding:"0.3cm"}}
+                style={{width:"8cm", padding:"0.3cm", fontFamily:"Arial"}}
             >
                 {/* ENCABEZADO COMPROBANTE */}
                 <div>
@@ -17,19 +18,13 @@ class Recibo extends Component {
                     <h5>Comprobante</h5>
                     <h6>No. {data.correlativo}</h6>
                 </div>
-                <hr 
-                    style={{color:"blue", height:"2px"}}
-                />
                 {/* INFO DEL COMPROBANTE */}
                 <div>
                     <h6>FECHA: {new Date(data.createdAt).toLocaleDateString()}</h6>
                     <h6>NOMBRE: {data.nombreCliente}</h6>
                     <h6>NIT: {data.nit ? data.nit : 'CF'}</h6>
                     <h6>DIRECCIÓN: {data.direccion}</h6>
-                </div>
-                <hr 
-                    style={{color:"blue", height:"2px"}}
-                />
+                </div>                
                 {/* DESCRIPCION DEL ENCABEZADO */}
                 <div
                     style={{display:"flex", justifyContent:"space-between"}}
@@ -40,28 +35,33 @@ class Recibo extends Component {
                         <p>
                             DESCRIPCIÓN:
                         </p>
-                        <h6>{data.Producto.name}-{data.Producto.color}-{data.Producto.Categorium.name}</h6>
+                        {
+                            prods.map((p) => (
+                                <div
+                                    key={p.id}
+                                >
+                                    <div style={{display:"flex", justifyContent:"space-between"}}>
+                                        <h6>{p.Producto.name}-{p.Producto.color}-{p.Producto.Categorium.name} - </h6>
+                                        <h6>Q.{p.precioFinal}</h6>
+                                    </div>
+                                    {/* AGREGAR TOTAL DE VENTA */}
+                                    <div>
+                                        {
+                                            p.Producto.Categorium.name.includes("Kit") && 
+                                            <>
+                                                <h6>IMEI: {p.imei ? p.imei : '--------------------'}</h6>
+                                                <h6>ICC: {p.icc ? p.icc : '--------------------'}</h6>
+                                                <h6>No. {p.numero ? p.numero : '--------------------'}</h6>
+                                                <h6>DPI: {data.dpi ? data.dpi : '--------------------'}</h6>
+                                            </>
+                                        }
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
-                    <div>
-                        <p>
-                            PRECIO
-                        </p>
-                        <h6>Q.{data.Producto.precioVenta}</h6>
-                    </div>
-                </div>
-                <hr 
-                    style={{color:"blue", height:"2px"}}
-                />
-                <div>
-                    <h6>IMEI: {data.imei ? data.imei : '--------------------'}</h6>
-                    <h6>ICC: {data.icc ? data.icc : '--------------------'}</h6>
-                    <h6>DPI: {data.dpi ? data.dpi : '--------------------'}</h6>
-                    <h6>No. {data.numero ? data.numero : '--------------------'}</h6>
                 </div>
                 {/* CONDICIONES DE GARANTÍA */}
-                <hr 
-                    style={{color:"blue", height:"4px", margin:"0 auto"}}
-                />
                 <div
                     style={{fontSize:"13px"}}
                 >

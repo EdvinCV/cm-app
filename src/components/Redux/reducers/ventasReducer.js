@@ -18,23 +18,27 @@ import {
     OBTENER_LISTADO_VENTAS_HOY,
     OBTENER_REPORTE_VENTAS_CATEGORIA,
     OBTENER_VENTAS_GANANCIAS,
-    CLEAR_VENTAS
+    CLEAR_VENTAS,
+    AGREGAR_PRODUCTOS_CARRITO,
+    OBTENER_VENTAS_ENCABEZADO_HOY
 } from "../actionTypes";
 
 
 // INITIAL STATE
 const initialState = {
-    productoSeleccionado: null,
+    productosSeleccionados: null,
     ventaSeleccionada: null,
     ventaCanceladaSeleccionada: null,
     tipoVenta: null,
     ventas: null,
     ventasHoy: null,
+    encabezadosHoy: null,
     ventasCanceladas: null,
     total: 0,
     errorResponse: false,
     informacionVenta: null,
     recibo: null,
+    productosVendidos: null,
     reporteVentas: null,
     reporteVentasUsuarios: null,
     reporteVentasCategoria: null,
@@ -67,7 +71,12 @@ const ventasReducer = (state = initialState, action) => {
         case OBTENER_VENTAS_HOY:
             return {
                 ...state,
-                ventasHoy: action.ventas
+                ventas: action.ventas
+            }
+        case OBTENER_VENTAS_ENCABEZADO_HOY:
+            return {
+                ...state,
+                encabezadosHoy: action.ventas
             }
         case OBTENER_VENTAS_GANANCIAS:
             return {
@@ -97,7 +106,13 @@ const ventasReducer = (state = initialState, action) => {
         case AGREGAR_PRODUCTO_CARRITO:
             return {
                 ...state,
-                productoSeleccionado: action.producto,
+                productosSeleccionados: state.productosSeleccionados === null ? [action.producto] : [action.producto, ...state.productosSeleccionados],
+                total: state.total + action.total
+            }
+        case AGREGAR_PRODUCTOS_CARRITO:
+            return {
+                ...state,
+                productosSeleccionados: action.productos,
                 total: action.total
             }
         case AGREGAR_PRODUCTO_CANTIDAD:
@@ -119,7 +134,7 @@ const ventasReducer = (state = initialState, action) => {
         case ELIMINAR_PRODUCTO_CARRITO:
             return {
                 ...state,
-                productoSeleccionado: null,
+                productosSeleccionados: null,
                 total: 0,
                 informacionVenta: null
             }
@@ -131,11 +146,12 @@ const ventasReducer = (state = initialState, action) => {
         case VENTA_REALIZADA:
             return {
                 ...state,
-                productoSeleccionado: null,
+                productosSeleccionados: null,
                 total: 0,
                 tipoVenta: null,
                 informacionVenta: null,
-                recibo: action.recibo
+                recibo: action.recibo,
+                productosVendidos: action.productosVendidos
             }
         case "ELIMINAR_RECIBO":
             return {

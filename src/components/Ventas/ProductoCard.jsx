@@ -1,22 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { agregarProductoCarrito } from '../Redux/actions/ventasActions';
-import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 
 const ProductoCard = ({id, name, producto, precioVenta, color, stock}) => {
     const dispatch = useDispatch();
 
-    const productoSeleccionado = useSelector((state) => state.ventas.productoSeleccionado);
-
     const handleAddCarrito = () => {
-        if(productoSeleccionado){
-            Swal.fire(
-                'Ya existe un elemento seleccionado.',
-                'ChatMóvil.',
-                'error'
-            );
-        }else {
+        if(id && name && producto && precioVenta && color && stock){
             dispatch(agregarProductoCarrito({id,name,producto,precioVenta, color}))
         }
     }

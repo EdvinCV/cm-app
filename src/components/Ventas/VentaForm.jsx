@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import {obtenerProductosVenta} from '../Redux/actions/productosActions';
+import { useEffect } from 'react';
 
 const VentaForm = ({setPrintRecibo}) => {
 
     const dispatch = useDispatch();
-    const productoSeleccionado = useSelector((state) => state.ventas.productoSeleccionado);
+    const [showData, setShowData] = useState(false);
+    const productosSeleccionados = useSelector((state) => state.ventas.productosSeleccionados);
     const total = useSelector((state) => state.ventas.total);
 
     const [formValues, setFormValues] = useState({
@@ -22,6 +24,14 @@ const VentaForm = ({setPrintRecibo}) => {
         icc: null,
         numero: null
     });
+
+    useEffect(() => {
+        productosSeleccionados.forEach((prod) => {
+            if(prod.name.includes("Kit")){
+                setShowData(true);
+            }
+        });
+    }, [productosSeleccionados]);
 
     const handleInputChange = (e) => {
         setFormValues({
@@ -125,7 +135,7 @@ const VentaForm = ({setPrintRecibo}) => {
                 onChange={handleInputChange}
             />
             {
-                (productoSeleccionado.name).includes("Kit") &&
+                showData === true &&
                 <>
                     {/* NUMERO DEL TELEFONO */}
                     <label htmlFor="">Número teléfono</label>
@@ -138,6 +148,7 @@ const VentaForm = ({setPrintRecibo}) => {
                         onChange={handleInputChange}
                         required
                     />
+                    {/* IMEI DEL TELÉFONO */}
                     <label htmlFor="">IMEI</label>
                     <input
                         name="imei"

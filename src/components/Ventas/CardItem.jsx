@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {eliminarProductoCarrito, cambiarCantidadEpin} from '../Redux/actions/ventasActions';
+import {eliminarProductoCarrito, cambiarCantidadEpin, cambiarCantidadPrecio} from '../Redux/actions/ventasActions';
 
 const CardItem = ({producto}) => {
     
@@ -15,11 +15,15 @@ const CardItem = ({producto}) => {
     // }
 
     const handleDeleteProduct = () => {
-        dispatch(eliminarProductoCarrito());
+        dispatch(eliminarProductoCarrito(producto.id));
     }
 
     const handleTotal = (e) => {
         dispatch(cambiarCantidadEpin(e.target.value));
+    }
+
+    const handleChangePrecio = (e) => {
+        dispatch(cambiarCantidadPrecio({id: producto.id,cantidad: e.target.value}));
     }
 
     return(
@@ -38,6 +42,13 @@ const CardItem = ({producto}) => {
                     <>
                         <p>Color: {producto.color ? producto.color: "-"}</p>
                         <p>Precio: {producto.precioVenta ? producto.precioVenta : "-"}</p>
+                        <input
+                            className="form-control"
+                            type="number"
+                            placeholder="Ingrese precio"
+                            defaultValue={producto.precioFinal}
+                            onChange={handleChangePrecio}
+                        />
                     </>
                 )
             }

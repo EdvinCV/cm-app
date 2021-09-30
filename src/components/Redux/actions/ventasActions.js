@@ -1,6 +1,6 @@
 // Actions types
 import {
-    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA, OBTENER_VENTAS_GANANCIAS
+    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA, OBTENER_VENTAS_GANANCIAS, AGREGAR_PRODUCTOS_CARRITO, OBTENER_VENTAS_ENCABEZADO_HOY
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
@@ -111,9 +111,11 @@ export const obtenerVentasCanceladas = ({fechaInicio, fechaFin}) => {
 export const seleccionarVenta = (venta) => {
     return async (dispatch) => {
         try {
+            const {data} = await clientToken.get('api/venta/recibo', {params: {id:venta}});
+            console.log(data);
             dispatch({
                 type: SELECCIONAR_VENTA,
-                venta
+                venta: data
             });
         } catch(error) {
             console.log(error);
@@ -140,15 +142,17 @@ export const generarVenta = (formValues) => {
         try {
             const state = getState();
             const venta = {
-                producto: state.ventas.productoSeleccionado,
                 venta: formValues,
                 total: parseInt(state.ventas.total),
                 usuario: state.usuarios.me
             }
-            const {data} = await clientToken.post('api/venta', venta);
+            const productos = state.ventas.productosSeleccionados;
+            const {data} = await clientToken.post('api/venta', {venta, productos});
+            console.log("VENDIDOS:::",data.productosVendidos);
             await dispatch({
                 type: VENTA_REALIZADA,
-                recibo: data.recibo
+                recibo: data.recibo,
+                productosVendidos: data.productosVendidos
             });
             await dispatch({
                 type: "ELIMINAR_RECIBO"
@@ -158,20 +162,6 @@ export const generarVenta = (formValues) => {
                 'ChatMóvil.',
                 'success'
             );
-            // Swal.fire({
-            //     title: 'Do you want to save the changes?',
-            //     showDenyButton: true,
-            //     showCancelButton: true,
-            //     confirmButtonText: 'Save',
-            //     denyButtonText: `Don't save`,
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         const history = useHistory()
-            //         (() => {
-            //             location.href = "/ventasssss";
-            //         })()
-            //     }
-            // });
         }catch(error){
             console.log(error);
             Swal.fire(
@@ -247,15 +237,41 @@ export const agregarProductoCarrito = (producto) => {
                 ...producto,
                 precioVenta: parseInt(producto.precioVenta),
                 stock: parseInt(producto.stock),
-                idProducto: producto.id
+                idProducto: producto.id,
+                precioFinal: parseInt(producto.precioVenta)
             }
             // Si el producto es Kit o Accesorio se elige el precio sino se espera a que se ingrese
+            console.log("PRODUCTO:::::",producto);
             const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") ? producto.precioVenta : 0;
             dispatch({
                 type: AGREGAR_PRODUCTO_CARRITO,
                 producto: producto,
                 total
             });
+        } catch(error){
+            console.log(error);
+        }
+    }
+}
+
+export const cambiarCantidadPrecio = (producto) => {
+    return async (dispatch, getState) => {
+        try {
+            const state = getState();
+            const listadoProductosSeleccionados = state.ventas.productosSeleccionados;
+            var total = 0;
+            listadoProductosSeleccionados.map((prod) => {
+                if(prod.id===producto.id){
+                    prod.precioFinal = parseInt(producto.cantidad);
+                }
+                total = total + prod.precioFinal;
+                return prod;
+            });
+            dispatch({
+                type: AGREGAR_PRODUCTOS_CARRITO,
+                productos: listadoProductosSeleccionados,
+                total
+            })
         } catch(error){
             console.log(error);
         }
@@ -272,10 +288,22 @@ export const cambiarCantidadEpin = (cantidad) => {
 }
 
 export const eliminarProductoCarrito = (id) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
+            const state = getState();
+            const prods = state.ventas.productosSeleccionados;
+            var total = 0;
+            const nuevosProductosSeleccionados = prods.length > 1 ? [] : null;
+            prods.forEach((p) => {
+                if(p.id !== id){
+                    total = total + p.precioFinal;
+                    nuevosProductosSeleccionados.push(p);
+                }
+            });
             dispatch({
-                type: ELIMINAR_PRODUCTO_CARRITO,
+                type: AGREGAR_PRODUCTOS_CARRITO,
+                productos: nuevosProductosSeleccionados,
+                total
             });
         } catch(error) {
             console.log(error);
@@ -348,7 +376,39 @@ export const deleteReporteVentas = () => {
     }
 }
 
+/* OBTENER TODAS LAS VENTAS HOY */
+export const getReporteEncabezadosHoy = () => {
+    return async (dispatch) => {
+        try {
+            const ventas = await clientToken.get('api/venta/hoyEncabezado');
+            dispatch({
+                type: OBTENER_VENTAS_ENCABEZADO_HOY,
+                ventas: ventas.data.ventas
+            });
+        } catch(error) {
+            dispatch({
+                type: OBTENER_VENTAS_ERROR
+            });
+        }
+    }
+}
 
+export const getReporteEncabezados = ({fechaInicio, fechaFin}) => {
+    return async (dispatch) => {
+        try {
+            const {data} = await clientToken.get('api/venta/reporteEncabezados', {params: {fechaInicio,fechaFin}});
+            console.log(data);
+            dispatch({
+                type: OBTENER_VENTAS_ENCABEZADO_HOY,
+                ventas: data.ventas
+            });
+        } catch(error) {
+            dispatch({
+                type: OBTENER_VENTAS_ERROR
+            });
+        }
+    }
+}
 // export const agregarCantidadProducto = (id) => {
 //     return async (dispatch, getState) => {
 //         try {
