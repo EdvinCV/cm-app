@@ -50,7 +50,6 @@ const ControlVentas = () => {
     const ventaSeleccionada = useSelector((state) => state.ventas.ventaSeleccionada);
     const reporteEncabezados = useSelector((state) => state.ventas.encabezadosHoy);
 
-
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
@@ -221,7 +220,8 @@ const ControlVentas = () => {
                                 >
                                     <Recibo 
                                         ref={componentRef}
-                                        infoRecibo={ventaSeleccionada}
+                                        infoRecibo={ventaSeleccionada.encabezado}
+                                        productos={ventaSeleccionada.productosVendidos}
                                     />
                                 </div>
                                 <Row>

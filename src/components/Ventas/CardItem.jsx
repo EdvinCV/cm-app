@@ -36,7 +36,7 @@ const CardItem = ({producto}) => {
                         className="form-control"
                         type="number"
                         placeholder="Ingrese cantidad"
-                        onChange={handleTotal}
+                        onChange={handleChangePrecio}
                     />
                 ) : (
                     <>

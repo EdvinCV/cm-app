@@ -98,52 +98,54 @@ const ListadoVentasCanceladas = () => {
                             <Container>
                                 <Row>
                                     <Col xs={12} md={7}>
-                                    <p><b>Correlativo: </b>{ventaCanceladaSeleccionada.correlativo}</p>
+                                    <p><b>Correlativo: </b>{ventaCanceladaSeleccionada.encabezado.correlativo}</p>
                                     </Col>
                                     <Col xs={6} md={5}>
-                                    <p><b>Fecha: </b>{new Date(ventaCanceladaSeleccionada.createdAt).toLocaleDateString()}</p>
+                                    <p><b>Fecha: </b>{new Date(ventaCanceladaSeleccionada.encabezado.createdAt).toLocaleDateString()}</p>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col xs={12} md={8}>
-                                    <p><b>Cliente: </b> {ventaCanceladaSeleccionada.nombreCliente}</p>
+                                    <p><b>Cliente: </b> {ventaCanceladaSeleccionada.encabezado.nombreCliente}</p>
                                     </Col>
                                     <Col xs={6} md={4}>
-                                    <p><b>DPI: </b> {ventaCanceladaSeleccionada.dpi ? ventaCanceladaSeleccionada.dpi : "---"}</p>
+                                    <p><b>DPI: </b> {ventaCanceladaSeleccionada.encabezado.dpi ? ventaCanceladaSeleccionada.encabezado.dpi : "---"}</p>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col xs={12} md={8}>
-                                    <p><b>Dirección</b> {ventaCanceladaSeleccionada.direccion ? ventaCanceladaSeleccionada.direccion : " ---"}</p>
+                                    <p><b>Dirección</b> {ventaCanceladaSeleccionada.encabezado.direccion ? ventaCanceladaSeleccionada.encabezado.direccion : " ---"}</p>
                                     </Col>
                                     <Col xs={6} md={4}>
-                                    <p><b>Teléfono:</b> {ventaCanceladaSeleccionada.numero ? ventaCanceladaSeleccionada.numero : " ---"}</p>
+                                    <p><b>Teléfono:</b> {ventaCanceladaSeleccionada.encabezado.numero ? ventaCanceladaSeleccionada.encabezado.numero : " ---"}</p>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <h5>Información de producto</h5>
-                                    <Col xs={6} md={4}>
-                                    <p>{ventaCanceladaSeleccionada.Producto.Categorium.name}</p>
-                                    </Col>
-                                    <Col xs={6} md={4}>
-                                    <p>{ventaCanceladaSeleccionada.Producto.name} - {ventaCanceladaSeleccionada.Producto.color}</p>
-                                    </Col>
-                                    <Col xs={6} md={4}>
-                                    <p>Q.{ventaCanceladaSeleccionada.Producto.precioVenta}</p>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={6} md={6}>
-                                    <p>IMEI:{ventaCanceladaSeleccionada.imei}</p>
-                                    </Col>
-                                    <Col xs={6} md={6}>
-                                    <p>ICC: {ventaCanceladaSeleccionada.icc}</p>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={12} md={12}>
-                                        <p><b>RAZÓN:</b>{ventaCanceladaSeleccionada.razonCancelacion}</p>
-                                    </Col>
+                                    <h5>Información de productos</h5>
+                                    {
+                                        ventaCanceladaSeleccionada.productosVendidos.map((prod) => (
+                                            <>
+                                                <hr></hr>
+                                                <Col xs={6} md={4}>
+                                                <p>{prod.Producto.Categorium.name}</p>
+                                                </Col>
+                                                <Col xs={6} md={4}>
+                                                <p>{prod.Producto.name} - {prod.Producto.color}</p>
+                                                </Col>
+                                                <Col xs={6} md={4}>
+                                                <p>Q.{prod.precioFinal}</p>
+                                                </Col>
+                                                <Row>
+                                                    <Col xs={6} md={6}>
+                                                    <p>IMEI:{prod.imei ? prod.imei : '-----'}</p>
+                                                    </Col>
+                                                    <Col xs={6} md={6}>
+                                                    <p>ICC: {prod.icc ? prod.icc : '-----'}</p>
+                                                    </Col>
+                                                </Row>
+                                            </>
+                                        ))
+                                    }
                                 </Row>
                             </Container>
                         ) : (

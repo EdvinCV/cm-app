@@ -222,7 +222,8 @@ const ControlCaja = () => {
                                 >
                                     <Recibo 
                                         ref={componentRef}
-                                        infoRecibo={ventaSeleccionada}
+                                        infoRecibo={ventaSeleccionada.encabezado}
+                                        productos={ventaSeleccionada.productosVendidos}
                                     />
                                 </div>
                                 <Row>

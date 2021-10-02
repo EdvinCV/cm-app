@@ -20,11 +20,13 @@ const VentasCanceladasTable = ({data, setShowDetail}) => {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Correlativo</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Usuario</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">NIT</th>
+                    <th scope="col">Tipo Venta</th>
                     <th scope="col">Razón</th>
-                    <th scope="col">Fecha</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Fecha de Venta</th>
+                    <th scope="col">Detalles</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,12 +37,13 @@ const VentasCanceladasTable = ({data, setShowDetail}) => {
                     >
                     <th scope="row">{index+1}</th>
                     <td>{venta.correlativo}</td>
-                    <td>{venta.categoria}</td>
-                    <td>{venta.producto} - {venta.color}</td>
-                    <td>{venta.usuario}</td>
+                    <td>{venta.nombreCliente}</td>
+                    <td>{venta.nit}</td>
+                    <td>{venta.tipoVenta}</td>
                     <td>{venta.razonCancelacion}</td>
+                    <td>Q.{venta.total}</td>
                     <td>{new Date(venta.createdAt).toLocaleDateString()}</td>
-                    {/* <td style={{display: "flex", justifyContent: "center"}}>
+                    <td style={{display: "flex", justifyContent: "space-around"}}>
                         <div style={{marginLeft: "2px"}}>
                             <button className="btn btn-warning" onClick={() => {handleSelectVenta(venta)}}>
                                 Ver
@@ -49,7 +52,7 @@ const VentasCanceladasTable = ({data, setShowDetail}) => {
                                 />
                             </button>
                         </div>
-                    </td> */}
+                    </td>
                     </tr>
                 ))
             }

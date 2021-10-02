@@ -94,8 +94,7 @@ export const obtenerVentasHoy = () => {
 export const obtenerVentasCanceladas = ({fechaInicio, fechaFin}) => {
     return async (dispatch) => {
         try {
-            const ventas = await clientToken.get('api/venta/canceladas', {params: {inicio: fechaInicio, fin: fechaFin}});
-            console.log("DEITA",ventas);
+            const ventas = await clientToken.get('api/venta/canceladas', {params: {fechaInicio, fechaFin}});
             dispatch({
                 type: OBTENER_VENTAS_CANCELADAS,
                 ventas: ventas.data.ventas
@@ -207,6 +206,11 @@ export const cancelarVentaCaja = (venta) => {
             await clientToken.post('api/venta/delete', venta);
             const ventas = await clientToken.get('api/venta');
             const ventasHoy = await clientToken.get('api/venta/hoy');
+            const ventasCanceladas = await clientToken.get('api/venta/hoyEncabezado');
+            dispatch({
+                type: OBTENER_VENTAS_ENCABEZADO_HOY,
+                ventas: ventasCanceladas.data.ventas
+            });
             dispatch({
                 type: OBTENER_VENTAS,
                 ventas: ventas.data.ventas
@@ -236,12 +240,22 @@ export const agregarProductoCarrito = (producto) => {
             const state = getState();
             const productosCarrito = state.ventas.productosSeleccionados;
             let productoExistente = false;
-            producto = {
-                ...producto,
-                precioVenta: parseInt(producto.precioVenta),
-                stock: parseInt(producto.stock),
-                idProducto: producto.id,
-                precioFinal: parseInt(producto.precioVenta)
+            if((producto.name).includes("Kit") || (producto.name).includes("Accesorios")){
+                producto = {
+                    ...producto,
+                    precioVenta: parseInt(producto.precioVenta),
+                    stock: parseInt(producto.stock),
+                    idProducto: producto.id,
+                    precioFinal: parseInt(producto.precioVenta)
+                }
+            } else {
+                producto = {
+                    ...producto,
+                    precioVenta: 0,
+                    stock: parseInt(producto.stock),
+                    idProducto: producto.id,
+                    precioFinal: 0
+                }
             }
             if(productosCarrito){
                 
@@ -258,7 +272,7 @@ export const agregarProductoCarrito = (producto) => {
                     'ChatMóvil.',
                     'error'
                 );   
-            }else {
+            } else {
                 const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") ? producto.precioVenta : 0;
                 dispatch({
                     type: AGREGAR_PRODUCTO_CARRITO,

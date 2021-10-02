@@ -6,8 +6,13 @@ const ProductoCard = ({id, name, producto, precioVenta, color, stock}) => {
     const dispatch = useDispatch();
 
     const handleAddCarrito = () => {
-        if(id && name && producto && precioVenta && color && stock){
-            dispatch(agregarProductoCarrito({id,name,producto,precioVenta, color}))
+        console.log(name);
+        if(name.includes("Kit") || name.includes("Accesorios")){
+            if(id && name && producto && precioVenta && color && stock){
+                dispatch(agregarProductoCarrito({id,name,producto,precioVenta, color}))
+            }
+        }else {
+            dispatch(agregarProductoCarrito({id,name,producto,precioVenta}))
         }
     }
 

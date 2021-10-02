@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ReporteStock = ({data}) => {
+    // TOTAL GANANCIAS
+    const [totalInvertido, setInvertido] = useState(0);
+
+    useEffect(() => {
+        let total = 0;
+        if(data){
+            data.forEach((p) => {
+                total += parseInt(p.precioCompra * p.cantidadComprada);
+            });
+            setInvertido(total);
+        }
+    }, [data]);
     return (
         <>
         <table className="table table-hover table-secondary">
@@ -33,6 +45,7 @@ const ReporteStock = ({data}) => {
             }
             </tbody>
         </table>
+        <h5>Total Invertido: Q.{totalInvertido}</h5>
         </>
     )
 }
