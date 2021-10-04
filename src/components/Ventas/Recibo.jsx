@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './recibo.css';
 
 class Recibo extends Component {
     constructor(){
@@ -17,13 +18,13 @@ class Recibo extends Component {
         return (
             // COMPROBANTE GENERAL
             <div
-                style={{width:"8cm", padding:"0.3cm", fontFamily:"Roboto"}}
+                style={{width:"8cm", padding:"0.3cm"}}
             >
                 {/* ENCABEZADO COMPROBANTE */}
                 <div>
                     <center> <img src="icons/recibo.png" alt="ChatMovil" width="200px"/> </center>
                 </div>
-                <div>
+                <div className="formatoRecibo">
                     <h5>Comprobante</h5>
                     <h6>No. {data.correlativo}</h6>
                 </div>

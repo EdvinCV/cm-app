@@ -1,6 +1,6 @@
 // Actions types
 import {
-    OBTENER_PRODUCTOS, OBTENER_PRODUCTOS_ERROR, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK, ELIMINAR_STOCK
+    OBTENER_PRODUCTOS, OBTENER_PRODUCTOS_ERROR, CREAR_PRODUCTO, SELECTED_PRODUCT, EDITAR_PRODUCTO, OBTENER_TOTAL_PRODUCTOS, OBTENER_REPORTE_PRODUCTOS, OBTENER_LISTADO_STOCK, OBTENER_PRODUCTOS_VENTA, OBTENER_REPORTE_STOCK, ELIMINAR_STOCK, OBTENER_TOTAL_INVERTIDO
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
@@ -241,6 +241,30 @@ export const deleteStock = (id) => {
                 type: ELIMINAR_STOCK,
             });
         } catch(error){
+            console.log(error);
+        }
+    }
+}
+
+// Obtener listado de usuarios
+export const obtenerTotalInvertido = () => {
+    return async (dispatch) => {
+        try {
+            const {data} = await clientToken.get('api/venta/invertido');
+            const totalInvertido = data.results[0].Invertido;
+            if(isNaN(totalInvertido)){
+                Swal.fire(
+                    'Error al obtener total invertido.',
+                    'ChatMóvil.',
+                    'error'
+                );
+            }else {
+                dispatch({
+                    type: OBTENER_TOTAL_INVERTIDO,
+                    totalInvertido: parseFloat(totalInvertido)
+                });
+            }
+        } catch(error) {
             console.log(error);
         }
     }

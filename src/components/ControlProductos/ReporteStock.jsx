@@ -8,7 +8,7 @@ const ReporteStock = ({data}) => {
         let total = 0;
         if(data){
             data.forEach((p) => {
-                total += parseInt(p.precioCompra * p.cantidadComprada);
+                total += (p.precioCompra * p.cantidadComprada);
             });
             setInvertido(total);
         }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ProductsTable from './ProductsTable';
 import {useDispatch, useSelector} from 'react-redux';
-import { obtenerProductos, crearProducto, seleccionarProducto, editarProducto, deleteProducto, obtenerTotalProductos, getReporteProductos, crearProductoStock, obtenerListadoStock, getReporteProductosStock } from '../Redux/actions/productosActions';
+import { obtenerProductos, crearProducto, seleccionarProducto, editarProducto, deleteProducto, obtenerTotalProductos, getReporteProductos, crearProductoStock, obtenerListadoStock, getReporteProductosStock, obtenerTotalInvertido } from '../Redux/actions/productosActions';
 import { obtenerUsuario } from '../Redux/actions/usersActions';
 import ProductoForm from './ProductoForm';
 import { Modal, Tabs, Tab } from 'react-bootstrap';
@@ -50,6 +50,7 @@ const Productos = () => {
     const usuario = useSelector((state) => state.usuarios);
     const listadoStock = useSelector((state) => state.productos.listadoStock);
     const reporteStock = useSelector((state) => state.productos.reporteStock);
+    const totalInvertido = useSelector((state) => state.productos.totalInvertido);
     
     // Obtener data del store
     useEffect(() => {
@@ -58,6 +59,7 @@ const Productos = () => {
         dispatch(obtenerProductos());
         dispatch(obtenerCategorias());
         dispatch(obtenerUsuario());
+        dispatch(obtenerTotalInvertido());
     }, [dispatch])
 
     useEffect(() => {
@@ -610,6 +612,22 @@ const Productos = () => {
                 }
             </div>
             </div>
+                </Tab>
+                <Tab eventKey="total" title="Inventario">
+                    <div className="contenedor-productos">
+                        <div className="card text-center">
+                            <div className="card-header">
+                                <h3>Información de inversión</h3>
+                            </div>
+                            <div className="card-body">
+                                <h3>Total: <b>Q.{totalInvertido}</b> </h3>
+                                <h4>Fecha: {new Date().toLocaleString("es-GT", {timeZone: "America/Guatemala"})}</h4>
+                            </div>
+                            <div className="card-footer text-muted">
+                                ChatMóvil
+                            </div>
+                        </div>
+                    </div>
                 </Tab>
             </Tabs>
             </div>

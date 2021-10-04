@@ -125,7 +125,7 @@ const ControlCaja = () => {
                         <div className="mt-5" style={{overflowX:"auto"}}>
                             {
                                 ventasHoy &&
-                                    <VentasCaja
+                                    <VentasEncabezosTable
                                         data={ventasHoy}
                                         setShowForm={setShowForm}
                                     />
