@@ -125,9 +125,11 @@ export const seleccionarVenta = (venta) => {
 export const seleccionarVentaCancelada = (venta) => {
     return async (dispatch) => {
         try {
+            console.log(venta);
+            const {data} = await clientToken.get('api/venta/cancelada', {params: {id:venta.id}});
             dispatch({
                 type: SELECCIONAR_VENTA_CANCELADA,
-                venta
+                venta: data
             });
         } catch(error) {
             console.log(error);

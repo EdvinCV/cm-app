@@ -82,7 +82,6 @@ const ListadoVentasCanceladas = () => {
                     )
                 }
             </div>
-
             <Modal 
                 aria-labelledby="contained-modal-title-vcenter"
                 show={showDetail}
