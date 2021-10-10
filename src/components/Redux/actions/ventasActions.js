@@ -242,7 +242,7 @@ export const agregarProductoCarrito = (producto) => {
             const state = getState();
             const productosCarrito = state.ventas.productosSeleccionados;
             let productoExistente = false;
-            if((producto.name).includes("Kit") || (producto.name).includes("Accesorios")){
+            if((producto.name).includes("Kit") || (producto.name).includes("Accesorios") || (producto.name).includes("SIM")){
                 producto = {
                     ...producto,
                     precioVenta: parseInt(producto.precioVenta),
@@ -275,7 +275,7 @@ export const agregarProductoCarrito = (producto) => {
                     'error'
                 );   
             } else {
-                const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") ? producto.precioVenta : 0;
+                const total = (producto.name).includes("Kit") || (producto.name).includes("Accesorios") || (producto.name).includes("SIM") ? producto.precioVenta : 0;
                 dispatch({
                     type: AGREGAR_PRODUCTO_CARRITO,
                     producto: producto,
