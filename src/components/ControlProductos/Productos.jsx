@@ -613,22 +613,25 @@ const Productos = () => {
             </div>
             </div>
                 </Tab>
-                <Tab eventKey="total" title="Inventario">
-                    <div className="contenedor-productos">
-                        <div className="card text-center">
-                            <div className="card-header">
-                                <h3>Información de inversión</h3>
+                {
+                    admin &&
+                        <Tab eventKey="total" title="Inventario">
+                            <div className="contenedor-productos">
+                                <div className="card text-center">
+                                    <div className="card-header">
+                                        <h3>Información de inversión</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <h3>Total: <b>Q.{totalInvertido}</b> </h3>
+                                        <h4>Fecha: {new Date().toLocaleString("es-GT", {timeZone: "America/Guatemala"})}</h4>
+                                    </div>
+                                    <div className="card-footer text-muted">
+                                        ChatMóvil
+                                    </div>
+                                </div>
                             </div>
-                            <div className="card-body">
-                                <h3>Total: <b>Q.{totalInvertido}</b> </h3>
-                                <h4>Fecha: {new Date().toLocaleString("es-GT", {timeZone: "America/Guatemala"})}</h4>
-                            </div>
-                            <div className="card-footer text-muted">
-                                ChatMóvil
-                            </div>
-                        </div>
-                    </div>
-                </Tab>
+                        </Tab>
+                }
             </Tabs>
             </div>
         )

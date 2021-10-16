@@ -7,9 +7,9 @@ const CajasTable = ({data}) => {
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Apertura</th>
-                <th scope="col">Cierre</th>
                 <th scope="col">Efectivo</th>
                 <th scope="col">Tarjeta</th>
+                <th style={{color: "blue"}} scope="col">Cierre</th>
                 <th scope="col">Fecha</th>
             </tr>
         </thead>
@@ -21,9 +21,9 @@ const CajasTable = ({data}) => {
                 >
                 <th scope="row">{index+1}</th>
                 <td>Q.{caja.cantidadEfectivoApertura}</td>
-                <td>Q.{caja.cantidadEfectivoCierre}</td>
                 <td>Q.{caja.cantidadEfectivoDia}</td>
                 <td>Q.{caja.cantidadTarjeta}</td>
+                <td style={{color: "blue"}}>Q.{caja.cantidadEfectivoCierre}</td>
                 <td>{new Date(caja.createdAt).toLocaleDateString()}</td>
                 </tr>
             ))

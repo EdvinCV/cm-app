@@ -48,7 +48,7 @@ const VentaForm = ({setPrintRecibo}) => {
             cancelButtonText: `Cancelar`,
             confirmButtonText: `FINALIZAR`,
             confirmButtonColor: '#021d34'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 if(formValues.metodoPago === null || formValues.metodoPago === ""){
                     Swal.fire(
@@ -58,7 +58,7 @@ const VentaForm = ({setPrintRecibo}) => {
                     );
                 }
                 else {
-                    dispatch(generarVenta(formValues));
+                    await dispatch(generarVenta(formValues));
                     // Se reinicializan los valores del formulario
                     setFormValues({
                         metodoPago: null,
@@ -70,7 +70,8 @@ const VentaForm = ({setPrintRecibo}) => {
                         icc: null,
                         numero: null
                     });
-                    dispatch(obtenerProductosVenta());
+                    await dispatch(obtenerProductosVenta());
+                    
                 }
             }
         });

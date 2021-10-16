@@ -163,6 +163,14 @@ export const generarVenta = (formValues) => {
                 'ChatMóvil.',
                 'success'
             );
+            Swal.fire({
+                title: 'Venta realizada correctamente',
+                confirmButtonText: 'Continuar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload(false);
+                    }
+                })
         }catch(error){
             console.log(error);
             Swal.fire(
