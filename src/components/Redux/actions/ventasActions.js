@@ -1,6 +1,6 @@
 // Actions types
 import {
-    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA, OBTENER_VENTAS_GANANCIAS, AGREGAR_PRODUCTOS_CARRITO, OBTENER_VENTAS_ENCABEZADO_HOY
+    SELECCIONAR_VENTA, AGREGAR_PRODUCTO_CARRITO, CAMBIO_TOTAL_VENTA, ELIMINAR_PRODUCTO_CARRITO, OBTENER_TOTAL_VENTAS, OBTENER_VENTAS, OBTENER_VENTAS_ERROR, VENTA_REALIZADA, OBTENER_VENTAS_CANCELADAS, SELECCIONAR_VENTA_CANCELADA, OBTENER_REPORTE_VENTAS, ELIMINAR_REPORTE_VENTAS, OBTENER_VENTAS_HOY, OBTENER_VENTAS_USUARIOS, OBTENER_LISTADO_VENTAS_HOY, OBTENER_REPORTE_VENTAS_CATEGORIA, OBTENER_VENTAS_GANANCIAS, AGREGAR_PRODUCTOS_CARRITO, OBTENER_VENTAS_ENCABEZADO_HOY, REPORTE_VENTA_PRODUCTOS
 } from '../actionTypes';
 // ACTIONS DE AUTENTICACION
 import {clientToken} from '../../../config/axios';
@@ -448,6 +448,21 @@ export const getReporteEncabezados = ({fechaInicio, fechaFin}) => {
             dispatch({
                 type: OBTENER_VENTAS_ERROR
             });
+        }
+    }
+}
+
+export const getReporteVentasProducto = (producto) => {
+    return async (dispatch) => {
+        try {
+            const {data} = await clientToken.get('api/venta/ventasProducto', {params: {id:producto.value}});
+            console.log("THEEES", data.productosVendidos);
+            dispatch({
+                type: REPORTE_VENTA_PRODUCTOS,
+                ventas: data.productosVendidos
+            });
+        } catch(error) {
+            console.log(error);
         }
     }
 }

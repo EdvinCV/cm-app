@@ -20,7 +20,8 @@ import {
     OBTENER_VENTAS_GANANCIAS,
     CLEAR_VENTAS,
     AGREGAR_PRODUCTOS_CARRITO,
-    OBTENER_VENTAS_ENCABEZADO_HOY
+    OBTENER_VENTAS_ENCABEZADO_HOY,
+    REPORTE_VENTA_PRODUCTOS
 } from "../actionTypes";
 
 
@@ -42,7 +43,8 @@ const initialState = {
     reporteVentas: null,
     reporteVentasUsuarios: null,
     reporteVentasCategoria: null,
-    reporteGanancias: null
+    reporteGanancias: null,
+    reporteVentasProducto: null
 };
 
 // REDUCER FUNCTION
@@ -152,6 +154,11 @@ const ventasReducer = (state = initialState, action) => {
                 informacionVenta: null,
                 recibo: action.recibo,
                 productosVendidos: action.productosVendidos
+            }
+        case REPORTE_VENTA_PRODUCTOS:
+            return {
+                ...state,
+                reporteVentasProducto: action.ventas
             }
         case "ELIMINAR_RECIBO":
             return {

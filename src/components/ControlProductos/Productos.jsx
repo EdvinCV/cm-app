@@ -112,7 +112,7 @@ const Productos = () => {
             Swal.fire('Debe seleccionar un producto','','error');
         }else {
             setShowStock(false);
-            dispatch(crearProductoStock({cantidad:values.cantidad, precio:values.precioCompra,productoId: productoStock.value}));
+            dispatch(crearProductoStock({cantidad:values.cantidad, precio:values.precioCompra,productoId: productoStock.value, proveedor: values.proveedor}));
         }
     }
     // Seleccionar producto para editar
@@ -394,34 +394,6 @@ const Productos = () => {
                             />
                         </Modal.Body>
                     </Modal>
-                    {/* LISTADO DE STOCKS */}
-                    <Modal
-                        show={showListadoStock}
-                        onHide={() => {setShowListadoStock(false)}}
-                        backdrop="static"
-                        keyboard={false}
-                        >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Listado de Stock</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            {
-                                listadoStock ? (
-                                    <ListadoStock 
-                                        stocks={listadoStock}
-                                        setShowListadoStock={setShowListadoStock}
-                                    />
-                                ) : (
-                                    <Loader
-                                        type="ThreeDots"
-                                        color="#ff4b9a"
-                                        height={100}
-                                        width={100}
-                                    />
-                                )
-                            }
-                        </Modal.Body>
-                    </Modal>
                     </div>
                 </Tab>
                 <Tab eventKey="homeNo" title="No Disponibles">
@@ -633,6 +605,35 @@ const Productos = () => {
                         </Tab>
                 }
             </Tabs>
+            {/* LISTADO DE STOCKS */}
+            <Modal
+                        size="lg"
+                        show={showListadoStock}
+                        onHide={() => {setShowListadoStock(false)}}
+                        backdrop="static"
+                        keyboard={false}
+                        >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Listado de Stock</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {
+                                listadoStock ? (
+                                    <ListadoStock 
+                                        stocks={listadoStock}
+                                        setShowListadoStock={setShowListadoStock}
+                                    />
+                                ) : (
+                                    <Loader
+                                        type="ThreeDots"
+                                        color="#ff4b9a"
+                                        height={100}
+                                        width={100}
+                                    />
+                                )
+                            }
+                        </Modal.Body>
+                    </Modal>
             </div>
         )
     }

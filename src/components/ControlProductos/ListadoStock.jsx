@@ -27,35 +27,46 @@ const ListadoStock = ({stocks,setShowListadoStock}) => {
     },[stocks]);
 
     return (
-        <>
-        {stocks && stocks.length > 0 &&
-        <ul className="list-group">
-            {
-                stocks.map((stock) => {
-                    return (
-                        <li 
-                            key={stock.id} 
-                            className="list-group-item list-group-item-action"
-                        >
-                            Precio Compra: Q.{stock.precioCompra} --
-                            Cantidad Comprada: {stock.cantidadComprada} --
-                            Cantidad Restante: {stock.cantidadRestante}
-                            <button
-                                className="btn btn-danger m-2"
-                                onClick={() => handleDeleteStock(stock.id)}
-                            >
-                                Eliminar
-                                <TiDeleteOutline
-                                    size="20px"
-                                />
-                            </button>
-                        </li>
-                    )
-                })
-            }
-        </ul>}
-        <p><b>Disponible:</b>{disponible}</p>
-        </>
+        stocks && stocks.length > 0 &&
+        (
+            <>
+            <table className="table table-hover text-center">
+                    <thead>
+                        <th>Proveedor</th>
+                        <th>Compra</th>
+                        <th>Comprado</th>
+                        <th>Restante</th>
+                        <th>Ingreso</th>
+                        <th>Eliminar</th>
+                    </thead>
+                    <tbody>
+                    {    
+                        stocks.map((stock) => {
+                            return (
+                                <tr>
+                                <td>{stock.proveedor}</td>
+                                <td>Q.{stock.precioCompra}</td>
+                                <td>{stock.cantidadComprada}</td>
+                                <td>{stock.cantidadRestante}</td>
+                                <td>{new Date(stock.createdAt).toLocaleDateString()}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={() => handleDeleteStock(stock.id)}
+                                    >
+                                        <TiDeleteOutline
+                                            size="20px"
+                                        />
+                                    </button>
+                                </td>
+                                </tr>
+                            )})
+                    }
+                    </tbody>
+                </table>
+                <p><b>Disponible:</b> {disponible}</p>
+            </>
+        )
     )
 }
 

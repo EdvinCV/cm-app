@@ -47,7 +47,16 @@ const ProductoStockForm = (props) => {
                     onChange={handleInputChange}
                     value={productoStock}
                 />
-                <br />
+                <br /> 
+            </div>
+            <div className="mb-3">
+                <Field
+                    name="proveedor"
+                    type="string"
+                    component={renderField}
+                    label="Proveedor"
+                    placeholder="Ingrese el proveedor"
+                />
             </div>
             <div className="mb-3">
                 <Field

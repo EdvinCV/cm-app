@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getReporteEncabezados, getReporteEncabezadosHoy, getReporteVentasGanancias, obtenerListadoVentasHoy, obtenerVentas, obtenerVentasUsuarios} from '../Redux/actions/ventasActions';
+import {getReporteEncabezados, getReporteEncabezadosHoy, getReporteVentasGanancias, obtenerListadoVentasHoy, obtenerVentas, obtenerVentasUsuarios, getReporteVentasProducto} from '../Redux/actions/ventasActions';
 import VentasTable from './VentasTable';
 import Swal from 'sweetalert2';
 import Loader from 'react-loader-spinner';
@@ -15,9 +15,15 @@ import ReporteGanancias from './ReporteGanancias';
 import { obtenerUsuario } from '../Redux/actions/usersActions';
 import { Redirect } from 'react-router-dom';
 import VentasEncabezosTable from './VentasEncabezadosTable';
+import VentaProductos from './VentaProductos';
+import { obtenerProductos, crearProducto, seleccionarProducto, editarProducto, deleteProducto, obtenerTotalProductos, getReporteProductos, crearProductoStock, obtenerListadoStock, getReporteProductosStock, obtenerTotalInvertido } from '../Redux/actions/productosActions';
+import VentasDetalleTable from './VentasDetalleTable';
 
 const ControlVentas = () => {
     const dispatch = useDispatch();
+    const productos = useSelector((state) => state.productos.productos);
+    const productosNoDisponibles = useSelector((state) => state.productos.productosNoDisponibles);
+    const [productoStock, setProductoVenta] = useState(null);
     const [formFechas, setFormFechas] = useState({
         fechaInicio: null,
         fechaFin: null
@@ -35,12 +41,30 @@ const ControlVentas = () => {
         fechaFin: null
     });
     const [showForm, setShowForm] = useState(false);
+    // Opciones de productos para select
+    const [productsOptions, setProductOptions] = useState([]);
     const componentRef = useRef();
 
     // Obtener ventas
     useEffect(() => {
         dispatch(obtenerUsuario());
+        dispatch(obtenerProductos());
     }, [dispatch])
+
+    // Transformación de data de productos.
+    useEffect(() => {
+        if(productos && productosNoDisponibles){
+            let productsTransform = productos.map((prod) => ({
+                value: prod.id,
+                label: `${prod.categoria}-${prod.name}${prod.color != null ? `-${prod.color}` : ''}`
+            }));
+            let productsTransformNo = productosNoDisponibles.map((prod) => ({
+                value: prod.id,
+                label: `${prod.categoria}-${prod.name}${prod.color != null ? `-${prod.color}` : ''}`
+            }));
+            setProductOptions([...productsTransform, ...productsTransformNo]);
+        }
+    }, [productos,productosNoDisponibles])
 
     const usuarioVerificacion = useSelector((state) => state.usuarios);
 
@@ -49,6 +73,7 @@ const ControlVentas = () => {
     const reporteGanancias = useSelector((state) => state.ventas.reporteGanancias);
     const ventaSeleccionada = useSelector((state) => state.ventas.ventaSeleccionada);
     const reporteEncabezados = useSelector((state) => state.ventas.encabezadosHoy);
+    const reporteVentasProducto = useSelector((state) => state.ventas.reporteVentasProducto);
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -130,8 +155,17 @@ const ControlVentas = () => {
         dispatch(getReporteEncabezadosHoy());
     }
 
-    const handleObtenerVentaRecibo = () => {
-        
+    const handleObtenerVentasProducto = (values) => {
+        console.log(values);
+        if(productoStock == null)
+        {
+            Swal.fire('Error', 'Debe seleccionar un producto', 'error');
+        }
+        else
+        {
+            dispatch(getReporteVentasProducto(productoStock));
+        }
+        console.log(productoStock);
     }
 
     if(usuarioVerificacion){
@@ -463,6 +497,32 @@ const ControlVentas = () => {
                         />
                     ) : (
                         <p>...</p>
+                    )
+                }
+            </div>
+            </div>
+            </Tab>
+            <Tab eventKey="vproductos" title="Ventas de producto">
+            <div className="contenedor-ventas">
+                <h1>Ventas por producto</h1>
+                <div
+                >
+                    <VentaProductos
+                        onSubmit={handleObtenerVentasProducto}
+                        productos={productsOptions}
+                        setProductoVenta={setProductoVenta}
+                        productoStock={productoStock}
+                    />
+                </div>
+                <hr />
+                <div
+                    style={{overflowY: "scroll", maxHeight: "400px"}}
+                >
+                {
+                    (reporteVentasProducto != null && reporteVentasProducto.length > 0) && (
+                        <VentasDetalleTable 
+                            data={reporteVentasProducto}
+                        />
                     )
                 }
             </div>
