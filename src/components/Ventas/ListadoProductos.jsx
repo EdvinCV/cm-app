@@ -48,7 +48,7 @@ const ListadoProductos = () => {
             if(productos){
                 const nuevosProductos = productos.filter(
                     (prod) => 
-                        (prod.name.toLowerCase().search(buscador) !== -1) ||  (prod.producto.toLowerCase().search(buscador) !== -1));
+                        (prod.name.toLowerCase().search(buscador.toLowerCase()) !== -1) ||  (prod.producto.toLowerCase().search(buscador.toLowerCase()) !== -1));
                 setProductosSeleccionados(nuevosProductos);
             }
         } else {
